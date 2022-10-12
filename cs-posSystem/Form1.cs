@@ -22,6 +22,7 @@ namespace cs_posSystem
             string price = tbox_price.Text;
             string amount = tbox_amount.Text;
             string _type = "";
+            string _good = cbox_good.SelectedItem.ToString();
             double _price = Convert.ToDouble(price);
             double _amount = Convert.ToDouble(amount);
             double _sum = _price * _amount;
@@ -35,7 +36,12 @@ namespace cs_posSystem
                 _type = "出貨";
             }
 
-            richTextBox1.Text = $"{_sum_str} {_type}";
+            richTextBox1.Text = $"{_sum_str} {_type} {_good}";
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("About is work");
         }
     }
 }
