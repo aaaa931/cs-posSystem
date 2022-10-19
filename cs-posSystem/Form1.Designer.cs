@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_input = new System.Windows.Forms.Button();
             this.btn_output = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,26 +49,32 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dataTable = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.cbox_good2 = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_input
             // 
             this.btn_input.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_input.Location = new System.Drawing.Point(55, 399);
+            this.btn_input.Location = new System.Drawing.Point(55, 489);
             this.btn_input.Name = "btn_input";
             this.btn_input.Size = new System.Drawing.Size(126, 37);
             this.btn_input.TabIndex = 0;
@@ -78,7 +85,7 @@
             // btn_output
             // 
             this.btn_output.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_output.Location = new System.Drawing.Point(187, 399);
+            this.btn_output.Location = new System.Drawing.Point(187, 489);
             this.btn_output.Name = "btn_output";
             this.btn_output.Size = new System.Drawing.Size(126, 37);
             this.btn_output.TabIndex = 1;
@@ -109,7 +116,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(50, 174);
+            this.label3.Location = new System.Drawing.Point(50, 259);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 27);
             this.label3.TabIndex = 4;
@@ -119,7 +126,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(50, 228);
+            this.label4.Location = new System.Drawing.Point(50, 326);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 27);
             this.label4.TabIndex = 5;
@@ -138,7 +145,7 @@
             // tbox_price
             // 
             this.tbox_price.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_price.Location = new System.Drawing.Point(123, 173);
+            this.tbox_price.Location = new System.Drawing.Point(123, 258);
             this.tbox_price.Name = "tbox_price";
             this.tbox_price.Size = new System.Drawing.Size(190, 33);
             this.tbox_price.TabIndex = 7;
@@ -146,7 +153,7 @@
             // tbox_amount
             // 
             this.tbox_amount.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_amount.Location = new System.Drawing.Point(123, 225);
+            this.tbox_amount.Location = new System.Drawing.Point(123, 318);
             this.tbox_amount.Name = "tbox_amount";
             this.tbox_amount.Size = new System.Drawing.Size(190, 35);
             this.tbox_amount.TabIndex = 8;
@@ -154,9 +161,9 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.richTextBox1.Location = new System.Drawing.Point(55, 334);
+            this.richTextBox1.Location = new System.Drawing.Point(55, 389);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(258, 59);
+            this.richTextBox1.Size = new System.Drawing.Size(258, 94);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
@@ -165,12 +172,11 @@
             this.groupBox1.Controls.Add(this.rbtn_sale);
             this.groupBox1.Controls.Add(this.rbtn_purchase);
             this.groupBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.groupBox1.Location = new System.Drawing.Point(55, 266);
+            this.groupBox1.Location = new System.Drawing.Point(55, 185);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(258, 58);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "進出貨";
             // 
             // rbtn_sale
             // 
@@ -217,7 +223,7 @@
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1097, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1191, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -227,20 +233,20 @@
             this.readMeToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(49, 20);
-            this.toolStripMenuItem1.Text = "Read";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.toolStripMenuItem1.Text = "說明";
             // 
             // readMeToolStripMenuItem
             // 
             this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readMeToolStripMenuItem.Text = "ReadMe";
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.readMeToolStripMenuItem.Text = "登入";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.aboutToolStripMenuItem.Text = "說明";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tabControl1
@@ -252,55 +258,59 @@
             this.tabControl1.Location = new System.Drawing.Point(348, 63);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(651, 373);
+            this.tabControl1.Size = new System.Drawing.Size(752, 409);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.dataTable);
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(643, 333);
+            this.tabPage1.Size = new System.Drawing.Size(744, 369);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "資料列表";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // button2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 36);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(454, 333);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "出貨圖表";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.button2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button2.Location = new System.Drawing.Point(138, 323);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(126, 37);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "匯出 pdf";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // button1
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 36);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(454, 333);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "統計";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.button1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button1.Location = new System.Drawing.Point(6, 323);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(126, 37);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "匯出 xlsx";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataTable
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
             this.date,
             this.type,
             this.name,
             this.price,
-            this.amount});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(643, 333);
-            this.dataGridView1.TabIndex = 1;
+            this.amount,
+            this.total});
+            this.dataTable.Location = new System.Drawing.Point(0, 0);
+            this.dataTable.Name = "dataTable";
+            this.dataTable.RowTemplate.Height = 24;
+            this.dataTable.Size = new System.Drawing.Size(745, 317);
+            this.dataTable.TabIndex = 1;
             // 
             // id
             // 
@@ -332,11 +342,63 @@
             this.amount.HeaderText = "數量";
             this.amount.Name = "amount";
             // 
+            // total
+            // 
+            this.total.HeaderText = "總價";
+            this.total.Name = "total";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 36);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(744, 369);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "出貨圖表";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 36);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(744, 369);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "統計";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // cbox_good2
+            // 
+            this.cbox_good2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cbox_good2.FormattingEnabled = true;
+            this.cbox_good2.Items.AddRange(new object[] {
+            "繃帶",
+            "酒精",
+            "口罩",
+            "濕度計",
+            "濕紙巾"});
+            this.cbox_good2.Location = new System.Drawing.Point(123, 155);
+            this.cbox_good2.Name = "cbox_good2";
+            this.cbox_good2.Size = new System.Drawing.Size(190, 35);
+            this.cbox_good2.TabIndex = 14;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::cs_posSystem.Properties.Resources.mlogo;
+            this.pictureBox1.Location = new System.Drawing.Point(723, 478);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(374, 67);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 502);
+            this.ClientSize = new System.Drawing.Size(1191, 583);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.cbox_good2);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.cbox_good);
             this.Controls.Add(this.groupBox1);
@@ -351,16 +413,18 @@
             this.Controls.Add(this.btn_output);
             this.Controls.Add(this.btn_input);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "北護藥局存儲系統";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,15 +452,20 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataTable;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cbox_good2;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn price;
         private System.Windows.Forms.DataGridViewTextBoxColumn amount;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn total;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

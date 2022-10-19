@@ -27,6 +27,8 @@ namespace cs_posSystem
             double _amount = Convert.ToDouble(amount);
             double _sum = _price * _amount;
             string _sum_str = _sum.ToString();
+            DataGridViewRowCollection rows = dataTable.Rows;
+            String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
             if (rbtn_purchase.Checked)
             {
@@ -37,6 +39,11 @@ namespace cs_posSystem
             }
 
             richTextBox1.Text = $"{_sum_str} {_type} {_good}";
+
+            rows.Add(new object[] {1, date, _type, _good, price, amount, _sum});
+
+            MessageBox.Show(rows[0].Cells[0].Value.ToString());
+
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
