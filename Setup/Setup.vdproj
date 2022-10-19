@@ -260,9 +260,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Setup"
+        "ProductName" = "8:北護藥局倉儲系統"
         "ProductCode" = "8:{21FC850B-3B19-46B6-929D-B3D34FE62F0C}"
-        "PackageCode" = "8:{D5B6ACF7-3DE5-43DC-8474-687F6AD3F61C}"
+        "PackageCode" = "8:{4F43C4CB-073F-4DCB-9018-191A4E0181E7}"
         "UpgradeCode" = "8:{0B3A2E7F-F7C5-4388-9515-51292E1FE38E}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
