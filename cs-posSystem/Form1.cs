@@ -78,7 +78,7 @@ namespace cs_posSystem
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("About is work");
+            MessageBox.Show("說明文件預定");
         }
     }
 }
