@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace cs_posSystem
 {
@@ -84,6 +85,53 @@ namespace cs_posSystem
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("說明文件預定");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // 1. 找出 excel 檔案位置
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "選擇 excel 檔案";
+            dialog.InitialDirectory = ".\\";
+            dialog.Filter = "excel files(*.*)| *.xlsx";
+            if (dialog.FileName != null && dialog.ShowDialog() == DialogResult.OK)
+            {
+                form_excel form_excel = new form_excel(dialog.FileName);
+                form_excel.ShowDialog();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "pdf files (*.pdf) | *.pdf";
+            // dlg.ShowDialog();
+
+            if (dlg.FileName != null && dlg.ShowDialog() == DialogResult.OK)
+            {
+                form_pdf form_pdf = new form_pdf(dlg.FileName);
+                form_pdf.ShowDialog();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // 2.1. 找出 word 檔案位置
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "選擇 word 檔案";
+            dialog.InitialDirectory = ".\\";
+            dialog.Filter = "word files(*.*)| *.docx";
+            if (dialog.FileName != null && dialog.ShowDialog() == DialogResult.OK)
+            {
+                form_word form_word = new form_word(dialog.FileName);
+                form_word.ShowDialog();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            form_mdi form_Mdi = new form_mdi();
+            form_Mdi.Show();
         }
     }
 }
