@@ -22,18 +22,6 @@ namespace cs_posSystem
             base.Dispose(disposing);
         }
 
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_SYSCOMMAND = 0x0112;
-            const int SC_CLOSE = 0xF060;
-            if (m.Msg == WM_SYSCOMMAND && (int)m.WParam == SC_CLOSE)
-            {
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
-
         #region Windows Form 設計工具產生的程式碼
 
         /// <summary>

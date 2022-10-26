@@ -22,23 +22,6 @@ namespace cs_posSystem
             base.Dispose(disposing);
         }
 
-        /*
-         * ————————————————
-         * 版权声明：本文为CSDN博主「美丽人生刘兴强」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-         * 原文链接：https://blog.csdn.net/qq_29676571/article/details/80034504
-        */
-        protected override void WndProc(ref Message m)
-        {
-            // 取消 form 關閉按鈕功能
-            const int WM_SYSCOMMAND = 0x0112;
-            const int SC_CLOSE = 0xF060;
-            if (m.Msg == WM_SYSCOMMAND && (int)m.WParam == SC_CLOSE)
-            {
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -69,6 +52,7 @@ namespace cs_posSystem
             this.tbox_pwd.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tbox_pwd.Location = new System.Drawing.Point(244, 123);
             this.tbox_pwd.Name = "tbox_pwd";
+            this.tbox_pwd.PasswordChar = '*';
             this.tbox_pwd.Size = new System.Drawing.Size(318, 35);
             this.tbox_pwd.TabIndex = 1;
             // 
@@ -106,6 +90,7 @@ namespace cs_posSystem
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.Text = "登入";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -12,6 +12,7 @@ namespace cs_posSystem
 {
     public partial class Form2 : Form
     {
+        bool isPwd = false;
         public Form2()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace cs_posSystem
 
             if (String.Equals(pwd, tbox_pwd.Text))
             {
+                isPwd = true;
                 this.Close();
             } else
             {
@@ -34,6 +36,11 @@ namespace cs_posSystem
         {
             this.Close();
             System.Environment.Exit(0);
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!this.isPwd) e.Cancel = true;
         }
     }
 }
