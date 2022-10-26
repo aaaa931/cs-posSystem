@@ -15,6 +15,11 @@ namespace cs_posSystem
         public Form1()
         {
             InitializeComponent();
+
+            // show login form dialog
+            Form2 from_login;
+            from_login = new Form2();
+            from_login.ShowDialog();
         }
 
         private void btn_input_Click(object sender, EventArgs e)
