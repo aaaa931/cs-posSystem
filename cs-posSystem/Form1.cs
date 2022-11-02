@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExcelDataReader.Log;
+using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,20 +31,14 @@ namespace cs_posSystem
             string amount = tbox_amount.Text;
             string _type = "";
             string _good = "";
-            // double _price = Convert.ToDouble(price);
-            // double _amount = Convert.ToDouble(amount);
-            // double _sum = _price * _amount;
             double _price = 0;
             double _amount = 0;
-            double _sum = 0;
-            string _sum_str = _sum.ToString();
             DataGridViewRowCollection rows = dataTable.Rows;
             String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            List<pos.igood> poslist = new List<pos.igood>();
+            pos.good newGood;
 
             _type = rbtn_purchase.Checked ? "進貨" : "出貨";
-
-            // for test
-            richTextBox1.Text = $"{_sum_str} {_type} {_good}";
 
             // catch exceoption
             if (cbox_good.SelectedItem == null)
@@ -69,17 +65,31 @@ namespace cs_posSystem
             try {
                 _price = Convert.ToDouble(price);
                 _amount = Convert.ToDouble(amount);
-                _sum = _price * _amount;
             } catch (Exception ex)
             {
                 MessageBox.Show("單價與數量必須是數字");
                 return;
             }
 
-            // add data to dataTable
-            rows.Add(new object[] {1, date, _type, _good, price, amount, _sum});
-            MessageBox.Show(rows[0].Cells[0].Value.ToString());
+            if (_type == "進貨")
+            {
+                newGood = new pos.good_input(_good, _price, _amount);
+                newGood.showLog();
+            } else
+            {
+                newGood = new pos.good_output(_good, _price, _amount);
+                newGood.showLog();
+            }
 
+            /*poslist.Add((pos.igood)Activator.CreateInstance(
+                Type.GetType("pos.good_input_new"), new object[] { _good, _price, _amount }
+                ));
+            MessageBox.Show(poslist[0].name);*/
+
+            // add data to dataTable
+            rows.Add(new object[] {newGood._id, newGood._date, newGood._type, newGood._name, newGood._price, newGood._amount, newGood._total});
+            // get datagridview value
+            MessageBox.Show(rows[0].Cells[0].Value.ToString());
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,7 +115,6 @@ namespace cs_posSystem
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "pdf files (*.pdf) | *.pdf";
-            // dlg.ShowDialog();
 
             if (dlg.FileName != null && dlg.ShowDialog() == DialogResult.OK)
             {
@@ -133,5 +142,69 @@ namespace cs_posSystem
             form_mdi form_Mdi = new form_mdi();
             form_Mdi.Show();
         }
+    }
+}
+
+namespace pos
+{
+    interface igood
+    {
+        string name { get; }
+        double price { get; }
+        double amount { get; }
+    }
+    class good
+    {
+        private static int num_of_id = 0;
+        public int _id { get; }
+        public double _price { get; }
+        public double _amount { get; }
+        public double _total { get; }
+        public tool.type _type { get; }
+        public string _name { get; }
+        public string _date { get; }
+
+        public good(string name, tool.type type, double price, double amount)
+        {
+            num_of_id++;
+
+            this._id = num_of_id;
+            this._date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            this._name = name;
+            this._price = price;
+            this._amount = amount;
+            this._type = type;
+            this._total = _price * _amount;
+        }
+
+        public double getTotal() { 
+            return _total;
+        }
+
+        public override string ToString()
+        {
+            return $"id: {_id}\ndate: {_date}\ntype: {_type}\nname: {_name}\nprice {_price}\namount: {_amount}\ntotal: {_total}";
+        }
+
+        public void showLog()
+        {
+            MessageBox.Show(this.ToString());
+        }
+        // rows.Add(new object[] {1, date, _type, _good, price, amount, _sum});
+    }
+
+    class good_input: good
+    {
+        public good_input(string name, double price, double amount) : base(name, tool.type.進貨, price, amount) { }
+    }
+
+    class good_output : good
+    {
+        public good_output(string name, double price, double amount) : base(name, tool.type.出貨, price, amount) { }
+    }
+
+    class tool
+    {
+        public enum type { 進貨, 出貨 }
     }
 }
