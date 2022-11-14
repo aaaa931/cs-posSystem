@@ -12,29 +12,27 @@
 
 ## 檔案說明
 
-<div style="padding-left: 12px;">
 1. cs-posSystem 專案
 
 * Form1.cs
 
-主畫面，所有介面基本上都在此，包含各式 Button、menuStrip click 事件，各 tab 呈現畫面等
+  主畫面，所有介面基本上都在此，包含各式 Button、menuStrip click 事件，各 tab 呈現畫面等
 
 * Form2.cs
 
-登入畫面，驗證密碼是否正確
+  登入畫面，驗證密碼是否正確
 
 * form_word.cs
 
-[測試檔] 使用 richTextBox 開啟 word 檔案
+  [測試檔] 使用 richTextBox 開啟 word 檔案
 
 * form_pdf.cs
 
-[測試檔] 使用 Adobe PDF Reader 開啟 pdf 檔案
+  [測試檔] 使用 Adobe PDF Reader 開啟 pdf 檔案
 
 * form_excel.cs
 
-[測試檔] 使用 dataGridView 開啟 excel 檔案，此方法不支援設計格式，需修改
-</div>
+  [測試檔] 使用 dataGridView 開啟 excel 檔案，此方法不支援設計格式，需修改
 
 2. Setup 專案
 
