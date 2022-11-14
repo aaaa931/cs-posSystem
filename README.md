@@ -12,6 +12,7 @@
 
 ## 檔案說明
 
+<div style="padding-left: 12px;">
 1. cs-posSystem 專案
 
 * Form1.cs
@@ -26,13 +27,14 @@
 
 [測試檔] 使用 richTextBox 開啟 word 檔案
 
-# form_pdf.cs
+* form_pdf.cs
 
 [測試檔] 使用 Adobe PDF Reader 開啟 pdf 檔案
 
-# form_excel.cs
+* form_excel.cs
 
 [測試檔] 使用 dataGridView 開啟 excel 檔案，此方法不支援設計格式，需修改
+</div>
 
 2. Setup 專案
 
