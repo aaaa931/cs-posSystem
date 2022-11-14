@@ -34,7 +34,6 @@
 
   [測試檔] 使用 dataGridView 開啟 excel 檔案，此方法不支援設計格式，需修改
 
-
 2. Setup 專案
 
-專案安裝所需 dll 檔案、icon 等
+  專案安裝所需 dll 檔案、icon 等
