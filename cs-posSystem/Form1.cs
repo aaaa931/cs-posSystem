@@ -10,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using good;
+// 動態綁定 Dynamic Binding
+using System.Reflection;
 
 namespace cs_posSystem
 {
@@ -34,9 +37,8 @@ namespace cs_posSystem
             double _price = 0;
             double _amount = 0;
             DataGridViewRowCollection rows = dataTable.Rows;
-            String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-            List<pos.igood> poslist = new List<pos.igood>();
-            pos.good newGood;
+            List<igood> poslist = new List<igood>();
+            good.good newGood;
 
             _type = rbtn_purchase.Checked ? "進貨" : "出貨";
 
@@ -73,11 +75,11 @@ namespace cs_posSystem
 
             if (_type == "進貨")
             {
-                newGood = new pos.good_input(_good, _price, _amount);
+                newGood = new good_input(_good, _price, _amount);
                 newGood.showLog();
             } else
             {
-                newGood = new pos.good_output(_good, _price, _amount);
+                newGood = new good_output(_good, _price, _amount);
                 newGood.showLog();
             }
 
@@ -145,7 +147,7 @@ namespace cs_posSystem
     }
 }
 
-namespace pos
+/*namespace pos
 {
     interface igood
     {
@@ -207,4 +209,4 @@ namespace pos
     {
         public enum type { 進貨, 出貨 }
     }
-}
+}*/

@@ -164,5 +164,11 @@
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\good\good.csproj">
+      <Project>{5a24e679-bfc8-4452-8341-4587fb4d4159}</Project>
+      <Name>good</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
