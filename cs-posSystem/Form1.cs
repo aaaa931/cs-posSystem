@@ -85,6 +85,7 @@ namespace cs_posSystem
                     rows.Add(new Object[] { index, _date_str, _type_str, _name, _price, _number
                                                , _total });
                 }
+
                 DBConfig.sqlite_datareader.Close();
             }
         }
