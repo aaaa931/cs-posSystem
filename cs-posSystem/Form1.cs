@@ -13,6 +13,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using good;
 // 動態綁定 Dynamic Binding
 using System.Reflection;
+using System.Data.SQLite;
+using Application = System.Windows.Forms.Application;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace cs_posSystem
 {
@@ -26,21 +29,79 @@ namespace cs_posSystem
             Form2 from_login;
             from_login = new Form2();
             from_login.ShowDialog();
+
+            Load_DB();
+            Show_DB();
+            this.label5.Text = index.ToString();
         }
+
+        int index = 1;
+        public class DBConfig
+        {
+            //log.db要放在【bin\Debug底下】      
+            public static string dbFile = Application.StartupPath + @"\log.db";
+            public static string dbPath = "Data source=" + dbFile;
+            public static SQLiteConnection sqlite_connect;
+            public static SQLiteCommand sqlite_cmd;
+            public static SQLiteDataReader sqlite_datareader;
+        }
+        private void Load_DB()
+        {
+            DBConfig.sqlite_connect = new SQLiteConnection(DBConfig.dbPath);
+            DBConfig.sqlite_connect.Open();// Open
+
+        }
+        private void Show_DB()
+        {
+            this.dataTable.Rows.Clear();
+
+            string sql = @"SELECT * from record;";
+            DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
+            DBConfig.sqlite_datareader = DBConfig.sqlite_cmd.ExecuteReader();
+
+            if (DBConfig.sqlite_datareader.HasRows)
+            {
+                while (DBConfig.sqlite_datareader.Read()) //read every data
+                {
+                    int _serial = Convert.ToInt32(DBConfig.sqlite_datareader["serial"]);
+                    int _date = Convert.ToInt32(DBConfig.sqlite_datareader["date"]);
+                    int _type = Convert.ToInt32(DBConfig.sqlite_datareader["type"]);
+                    string _name = Convert.ToString(DBConfig.sqlite_datareader["name"]);
+                    double _price = Convert.ToDouble(DBConfig.sqlite_datareader["price"]);
+                    double _number = Convert.ToDouble(DBConfig.sqlite_datareader["number"]);
+                    double _total = _price * _number;
+                    string _date_str = DateTimeOffset.FromUnixTimeSeconds(_date).ToString("yyyy-MM-dd hh:mm:ss");
+                    string _type_str = "";
+
+                    if (_type == 0) {
+                        _type_str = "進貨";
+                    }
+                    else {
+                        _type_str = "出貨";
+                    }
+
+                    index = _serial;
+                    DataGridViewRowCollection rows = dataTable.Rows;
+                    rows.Add(new Object[] { index, _date_str, _type_str, _name, _price, _number
+                                               , _total });
+                }
+                DBConfig.sqlite_datareader.Close();
+            }
+        }
+
 
         private void btn_input_Click(object sender, EventArgs e)
         {
-            string price = tbox_price.Text;
-            string amount = tbox_amount.Text;
-            string _type = "";
-            string _good = "";
+            string _name = "";
+            long _date = DateTimeOffset.Now.ToUnixTimeSeconds();
+            int _type = 0;
             double _price = 0;
-            double _amount = 0;
+            double _number = 0;
+            double _sum = 0;
             DataGridViewRowCollection rows = dataTable.Rows;
-            List<igood> poslist = new List<igood>();
             good.good newGood;
 
-            _type = rbtn_purchase.Checked ? "進貨" : "出貨";
+            _type = rbtn_purchase.Checked ? 0 : 1;
 
             // catch exceoption
             if (cbox_good.SelectedItem == null)
@@ -49,7 +110,7 @@ namespace cs_posSystem
                 return;
             } else
             {
-                _good = cbox_good.SelectedItem.ToString();
+                _name = cbox_good.SelectedItem.ToString();
             }
 
             if (rbtn_purchase.Checked == false && rbtn_sale.Checked == false)
@@ -58,40 +119,51 @@ namespace cs_posSystem
                 return;
             }
 
-            if (_good.Trim() == "" || _price.ToString().Trim() == "" || _amount.ToString().Trim() == "")
+            if (_name.Trim() == "" || _price.ToString().Trim() == "" || _number.ToString().Trim() == "")
             {
                 MessageBox.Show("輸入欄位不得為空");
                 return;
             }
 
             try {
-                _price = Convert.ToDouble(price);
-                _amount = Convert.ToDouble(amount);
+                _price = Convert.ToDouble(tbox_price.Text);
+                _number = Convert.ToDouble(tbox_amount.Text);
             } catch (Exception ex)
             {
                 MessageBox.Show("單價與數量必須是數字");
                 return;
             }
 
-            if (_type == "進貨")
+            this.index++;
+            label5.Text = this.index.ToString();
+
+            string sql = @"insert into record (date, type, name, price, number) values(" +
+                " '" + _date.ToString() + "'," +
+                " '" + _type.ToString() + "'," +
+                " '" + _name.ToString() + "'," +
+                " '" + _price.ToString() + "'," +
+                " '" + _number.ToString() + "' " +
+                ")";
+
+            DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
+            DBConfig.sqlite_cmd.ExecuteNonQuery();
+
+            Show_DB();
+
+            /*if (_type == 0)
             {
-                newGood = new good_input(_good, _price, _amount);
+                newGood = new good_input(_name, _price, _number);
                 newGood.showLog();
             } else
             {
-                newGood = new good_output(_good, _price, _amount);
+                newGood = new good_output(_name, _price, _number);
                 newGood.showLog();
-            }
-
-            /*poslist.Add((pos.igood)Activator.CreateInstance(
-                Type.GetType("pos.good_input_new"), new object[] { _good, _price, _amount }
-                ));
-            MessageBox.Show(poslist[0].name);*/
+            }*/
 
             // add data to dataTable
-            rows.Add(new object[] {newGood._id, newGood._date, newGood._type, newGood._name, newGood._price, newGood._amount, newGood._total});
+            // rows.Add(new object[] {newGood._id, newGood._date, newGood._type, newGood._name, newGood._price, newGood._amount, newGood._total});
             // get datagridview value
-            MessageBox.Show(rows[0].Cells[0].Value.ToString());
+            // MessageBox.Show(rows[0].Cells[0].Value.ToString());
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,6 +215,70 @@ namespace cs_posSystem
         {
             form_mdi form_Mdi = new form_mdi();
             form_Mdi.Show();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewCellCollection selRowData = dataTable.Rows[e.RowIndex].Cells;
+
+            string _type = "";
+            _type = Convert.ToString(selRowData[2].Value);
+
+            if (_type.Equals("進貨"))
+            {
+                rbtn_purchase.Checked = true;
+            }
+            else
+            {
+                rbtn_sale.Checked = true;
+            }
+
+
+            this.cbox_good.Text = Convert.ToString(selRowData[3].Value);
+            this.tbox_price.Text = Convert.ToString(selRowData[4].Value);
+            this.tbox_amount.Text = Convert.ToString(selRowData[5].Value);
+            this.label5.Text = Convert.ToString(selRowData[0].Value);
+
+        }
+
+        private void btn_update_Click(object sender, EventArgs e)
+        {
+            string _name = "";
+            int _serial = 0;
+            int _stock_type = 0;
+            double _price = 0;
+            double _number = 0;
+
+            if (rbtn_purchase.Checked == true)
+            {
+                _stock_type = 0;
+            }
+            else
+            {
+                _stock_type = 1;
+            }
+
+            // 抓取textbox的資料
+            _name = cbox_good.Text;
+
+
+            _price = Convert.ToDouble(tbox_price.Text);
+            _number = Convert.ToDouble(tbox_amount.Text);
+            _serial = Convert.ToInt32(label5.Text);
+
+
+            string sql = @"UPDATE record " +
+                      " SET name = '" + _name + "',"
+                        + " type = '" + _stock_type.ToString() + "' , "
+                        + " price = '" + _price.ToString() + "',"
+                        + " number = '" + _number.ToString() + "' "
+                        + "   where serial = " + _serial.ToString() + ";";
+
+
+            DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
+            DBConfig.sqlite_cmd.ExecuteNonQuery();
+            Show_DB();
+
         }
     }
 }
