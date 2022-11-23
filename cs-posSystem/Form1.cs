@@ -9,13 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using good;
 // 動態綁定 Dynamic Binding
 using System.Reflection;
 using System.Data.SQLite;
 using Application = System.Windows.Forms.Application;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace cs_posSystem
 {
