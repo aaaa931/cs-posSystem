@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "good", "good\good.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{AE13EC42-5420-43FE-B6F5-1B238D5047BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "classes", "file\classes.csproj", "{5F02F21D-0D44-4945-8D2B-91A251E6B124}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5A24E679-BFC8-4452-8341-4587FB4D4159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A24E679-BFC8-4452-8341-4587FB4D4159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A24E679-BFC8-4452-8341-4587FB4D4159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F02F21D-0D44-4945-8D2B-91A251E6B124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F02F21D-0D44-4945-8D2B-91A251E6B124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F02F21D-0D44-4945-8D2B-91A251E6B124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F02F21D-0D44-4945-8D2B-91A251E6B124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

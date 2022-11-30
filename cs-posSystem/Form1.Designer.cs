@@ -68,6 +68,7 @@ namespace cs_posSystem
             this.cbox_good2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
+            this.開啟檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -236,7 +237,8 @@ namespace cs_posSystem
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.readMeToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.開啟檔案ToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
             this.toolStripMenuItem1.Text = "說明";
@@ -244,13 +246,13 @@ namespace cs_posSystem
             // readMeToolStripMenuItem
             // 
             this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readMeToolStripMenuItem.Text = "登入";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "說明";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -448,6 +450,13 @@ namespace cs_posSystem
             this.btn_update.UseVisualStyleBackColor = true;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
+            // 開啟檔案ToolStripMenuItem
+            // 
+            this.開啟檔案ToolStripMenuItem.Name = "開啟檔案ToolStripMenuItem";
+            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.開啟檔案ToolStripMenuItem.Text = "開啟檔案";
+            this.開啟檔案ToolStripMenuItem.Click += new System.EventHandler(this.開啟檔案ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -526,6 +535,7 @@ namespace cs_posSystem
         private Button button3;
         private Button button4;
         private Button btn_update;
+        private ToolStripMenuItem 開啟檔案ToolStripMenuItem;
     }
 }
 

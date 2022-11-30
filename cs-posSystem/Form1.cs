@@ -14,6 +14,9 @@ using good;
 using System.Reflection;
 using System.Data.SQLite;
 using Application = System.Windows.Forms.Application;
+using Excel = Microsoft.Office.Interop.Excel;
+using Classes;
+using System.Diagnostics;
 
 namespace cs_posSystem
 {
@@ -69,14 +72,7 @@ namespace cs_posSystem
                     double _number = Convert.ToDouble(DBConfig.sqlite_datareader["number"]);
                     double _total = _price * _number;
                     string _date_str = DateTimeOffset.FromUnixTimeSeconds(_date).ToString("yyyy-MM-dd hh:mm:ss");
-                    string _type_str = "";
-
-                    if (_type == 0) {
-                        _type_str = "進貨";
-                    }
-                    else {
-                        _type_str = "出貨";
-                    }
+                    string _type_str = _type == 0 ? "進貨" : "出貨";
 
                     index = _serial;
                     DataGridViewRowCollection rows = dataTable.Rows;
@@ -96,7 +92,6 @@ namespace cs_posSystem
             int _type = 0;
             double _price = 0;
             double _number = 0;
-            double _sum = 0;
             DataGridViewRowCollection rows = dataTable.Rows;
             good.good newGood;
 
@@ -173,15 +168,93 @@ namespace cs_posSystem
         private void button1_Click(object sender, EventArgs e)
         {
             // 1. 找出 excel 檔案位置
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "選擇 excel 檔案";
-            dialog.InitialDirectory = ".\\";
-            dialog.Filter = "excel files(*.*)| *.xlsx";
-            if (dialog.FileName != null && dialog.ShowDialog() == DialogResult.OK)
-            {
-                form_excel form_excel = new form_excel(dialog.FileName);
-                form_excel.ShowDialog();
-            }
+            //OpenFileDialog dialog = new OpenFileDialog();
+            //dialog.Title = "選擇 excel 檔案";
+            //dialog.InitialDirectory = ".\\";
+            //dialog.Filter = "excel files(*.*)| *.xlsx";
+            //if (dialog.FileName != null && dialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    form_excel form_excel = new form_excel(dialog.FileName);
+            //    form_excel.ShowDialog();
+            //}
+
+            //DataGridViewRowCollection rows = dataTable.Rows;
+            //// 設定儲存excel檔
+            //SaveFileDialog save = new SaveFileDialog();
+            //save.InitialDirectory =
+            //Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //save.FileName = "Export_Chart_Data";
+            //save.Filter = "*.xlsx | *.xlsx";
+            //if (save.ShowDialog() != DialogResult.OK) return;
+            //// Excel 物件
+            //Excel.Application xls = null;
+            //try
+            //{
+            //    // 打開excel
+            //    xls = new Excel.Application();
+            //    // 新增第一個sheet
+            //    // Excel WorkBook
+            //    Excel.Workbook book = xls.Workbooks.Add();
+            //    //Excel.Worksheet Sheet = (Excel.Worksheet)book.Worksheets[1];
+            //    Excel.Worksheet Sheet = xls.ActiveSheet;
+            //    // 把資料塞進 Excel 內
+            //    // 標題
+            //    string[] titles = new string[] { "編號", "日期", "類別", "名稱", "單價", "數量", "總價" };
+
+            //    for (int i = 0; i < titles.Length; i++)
+            //    {
+            //        Sheet.Cells[1, i + 1] = titles[i];
+            //    }
+            //    // 內容
+            //    for (int i = 1; i < rows.Count; i++)
+            //    {
+            //        //Sheet.Cells[i + 1, 1] = rows[i - 1].Cells[0].Value;
+            //        //Sheet.Cells[i + 1, 2] = rows[i - 1].Cells[1].Value;
+            //        for (int j = 0; j < 7; j++)
+            //        {
+            //            Sheet.Cells[i + 1, j + 1] = rows[i - 1].Cells[j].Value;
+            //        }
+            //    }
+
+            //    // 新增第二個sheet，放到最後一個
+            //    // Excel WorkBook
+            //    // Excel.Worksheet Sheet2 = book.Sheets.Add(After: book.Sheets[book.Sheets.Count]);
+            //    // Sheet2.Name = "1234";
+            //    // 把資料塞進 Excel 內
+            //    // 標題
+            //    // Sheet2.Cells[1, 1] = "身高範圍";
+            //    // Sheet2.Cells[1, 2] = "學生統計";
+            //    // 內容
+            //    /*for (int k = 11; k < 110; k++)
+            //    {
+            //        Sheet2.Cells[k + 1, 1] = k;
+            //        Sheet2.Cells[k + 1, 2] = 2 * k;
+            //    }*/
+            //    // 新增第三個sheet，放到第一個
+            //    // Excel WorkBook
+            //    /*Excel.Worksheet Sheet3 = book.Sheets.Add(Before: book.Sheets[1]);
+            //    Sheet3.Name = "第0頁";
+            //    // 把資料塞進 Excel 內
+            //    // 標題
+            //    Sheet3.Cells[1, 1] = "我是第一頁";
+            //    Sheet3.Cells[1, 2] = "哇哈哈";
+            //    // 修改第三頁sheet
+            //    book.Sheets[book.Sheets.Count].Cells[4, 5] = "補充說明";*/
+            //    // 儲存檔案
+            //    book.SaveAs(save.FileName);
+            //}
+            //catch (Exception err)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    xls.Quit();
+            //}
+            Classes.File file = new Classes.File();
+            string fileName = file.readFileName("save", "xlsx");
+            DataGridViewRowCollection rows = dataTable.Rows;
+            file.write_xlsx(fileName, rows);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -232,12 +305,10 @@ namespace cs_posSystem
                 rbtn_sale.Checked = true;
             }
 
-
             this.cbox_good.Text = Convert.ToString(selRowData[3].Value);
             this.tbox_price.Text = Convert.ToString(selRowData[4].Value);
             this.tbox_amount.Text = Convert.ToString(selRowData[5].Value);
             this.label5.Text = Convert.ToString(selRowData[0].Value);
-
         }
 
         private void btn_update_Click(object sender, EventArgs e)
@@ -259,12 +330,9 @@ namespace cs_posSystem
 
             // 抓取textbox的資料
             _name = cbox_good.Text;
-
-
             _price = Convert.ToDouble(tbox_price.Text);
             _number = Convert.ToDouble(tbox_amount.Text);
             _serial = Convert.ToInt32(label5.Text);
-
 
             string sql = @"UPDATE record " +
                       " SET name = '" + _name + "',"
@@ -273,75 +341,72 @@ namespace cs_posSystem
                         + " number = '" + _number.ToString() + "' "
                         + "   where serial = " + _serial.ToString() + ";";
 
-
             DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
             DBConfig.sqlite_cmd.ExecuteNonQuery();
             Show_DB();
 
         }
+
+        public void write_csv(string fileName)
+        {
+            // 待驗證
+            // 設定儲存excel檔
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory =
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            save.FileName = "Export_Chart_Data.csv";
+            if (save.ShowDialog() != DialogResult.OK) return;
+            string strFilePath = save.FileName;
+            StringBuilder sbOutput = new StringBuilder();
+
+            for (int i = 0; i < 10; i++)
+            {
+                string tmp = $"{i}";
+                for (int j = 1; j < 10; j++)
+                {
+                    tmp = $"{tmp},{i}{j}";
+                }
+                sbOutput.AppendLine(tmp);
+            }
+            // Create and write the csv file
+            System.IO.File.WriteAllText(strFilePath, sbOutput.ToString());
+            // To append more lines to the csv file
+            System.IO.File.AppendAllText(strFilePath, sbOutput.ToString());
+        }
+
+        public void read_csv(string fileName)
+        {
+            // 待驗證
+            System.IO.StreamReader sr = new System.IO.StreamReader(fileName);
+            string first_line = sr.ReadLine();
+            MessageBox.Show(first_line);
+            string[] words = first_line.Split(',');
+            MessageBox.Show(words[2]);
+        }
+
+        private void 開啟檔案ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //string fileName = readFileDialog();
+            Classes.File file = new Classes.File();
+            string fileName = file.readFileName("open", "all");
+            DataGridViewRowCollection rows = dataTable.Rows;
+
+            if (fileName == null)
+            {
+                MessageBox.Show("檔名不得為空");
+            } else if (fileName.Contains(".xlsx"))
+            {
+                file.read_xlsx(fileName, rows);
+            } else if (fileName.Contains(".csv"))
+            {
+                // read_csv(fileName);
+            } else if (fileName.Contains(".word"))
+            {
+                // read_word(fileName);
+            } else if (fileName.Contains(".pdf"))
+            {
+                // read_pdf(fileName);
+            }
+        }
     }
 }
-
-/*namespace pos
-{
-    interface igood
-    {
-        string name { get; }
-        double price { get; }
-        double amount { get; }
-    }
-    class good
-    {
-        private static int num_of_id = 0;
-        public int _id { get; }
-        public double _price { get; }
-        public double _amount { get; }
-        public double _total { get; }
-        public tool.type _type { get; }
-        public string _name { get; }
-        public string _date { get; }
-
-        public good(string name, tool.type type, double price, double amount)
-        {
-            num_of_id++;
-
-            this._id = num_of_id;
-            this._date = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-            this._name = name;
-            this._price = price;
-            this._amount = amount;
-            this._type = type;
-            this._total = _price * _amount;
-        }
-
-        public double getTotal() { 
-            return _total;
-        }
-
-        public override string ToString()
-        {
-            return $"id: {_id}\ndate: {_date}\ntype: {_type}\nname: {_name}\nprice {_price}\namount: {_amount}\ntotal: {_total}";
-        }
-
-        public void showLog()
-        {
-            MessageBox.Show(this.ToString());
-        }
-        // rows.Add(new object[] {1, date, _type, _good, price, amount, _sum});
-    }
-
-    class good_input: good
-    {
-        public good_input(string name, double price, double amount) : base(name, tool.type.進貨, price, amount) { }
-    }
-
-    class good_output : good
-    {
-        public good_output(string name, double price, double amount) : base(name, tool.type.出貨, price, amount) { }
-    }
-
-    class tool
-    {
-        public enum type { 進貨, 出貨 }
-    }
-}*/
