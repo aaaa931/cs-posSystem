@@ -47,8 +47,7 @@ namespace cs_posSystem
             this.cbox_good = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.開啟檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
@@ -68,12 +67,13 @@ namespace cs_posSystem
             this.cbox_good2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
-            this.開啟檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_testPlot = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -236,25 +236,17 @@ namespace cs_posSystem
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.readMeToolStripMenuItem,
-            this.aboutToolStripMenuItem,
             this.開啟檔案ToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
-            this.toolStripMenuItem1.Text = "說明";
+            this.toolStripMenuItem1.Text = "檔案";
             // 
-            // readMeToolStripMenuItem
+            // 開啟檔案ToolStripMenuItem
             // 
-            this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readMeToolStripMenuItem.Text = "登入";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "說明";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.開啟檔案ToolStripMenuItem.Name = "開啟檔案ToolStripMenuItem";
+            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.開啟檔案ToolStripMenuItem.Text = "開啟檔案";
+            this.開啟檔案ToolStripMenuItem.Click += new System.EventHandler(this.開啟檔案ToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -396,6 +388,7 @@ namespace cs_posSystem
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn_testPlot);
             this.tabPage2.Location = new System.Drawing.Point(4, 36);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -431,7 +424,7 @@ namespace cs_posSystem
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::cs_posSystem.Properties.Resources.mlogo;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(723, 478);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(374, 67);
@@ -450,12 +443,16 @@ namespace cs_posSystem
             this.btn_update.UseVisualStyleBackColor = true;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
-            // 開啟檔案ToolStripMenuItem
+            // btn_testPlot
             // 
-            this.開啟檔案ToolStripMenuItem.Name = "開啟檔案ToolStripMenuItem";
-            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.開啟檔案ToolStripMenuItem.Text = "開啟檔案";
-            this.開啟檔案ToolStripMenuItem.Click += new System.EventHandler(this.開啟檔案ToolStripMenuItem_Click);
+            this.btn_testPlot.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_testPlot.Location = new System.Drawing.Point(6, 329);
+            this.btn_testPlot.Name = "btn_testPlot";
+            this.btn_testPlot.Size = new System.Drawing.Size(126, 37);
+            this.btn_testPlot.TabIndex = 17;
+            this.btn_testPlot.Text = "測試圖表";
+            this.btn_testPlot.UseVisualStyleBackColor = true;
+            this.btn_testPlot.Click += new System.EventHandler(this.btn_testPlot_Click);
             // 
             // Form1
             // 
@@ -490,6 +487,7 @@ namespace cs_posSystem
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -514,8 +512,6 @@ namespace cs_posSystem
         private System.Windows.Forms.ComboBox cbox_good;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem readMeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dataTable;
@@ -536,6 +532,7 @@ namespace cs_posSystem
         private Button button4;
         private Button btn_update;
         private ToolStripMenuItem 開啟檔案ToolStripMenuItem;
+        private Button btn_testPlot;
     }
 }
 

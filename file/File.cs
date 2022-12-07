@@ -10,15 +10,15 @@ namespace Classes
 {
     public class File
     {
-        public string readFileName(string type, string subName)
+        public string readFileName(string subName)
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Title = "選擇檔案";
             open.InitialDirectory =
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string date = DateTime.Now.ToString("yyyy-MM-dd");
-            open.FileName = type == "save" ? $"{date}.{subName}" : "";
-            open.Filter = "所有檔案(*.*) | *.* | xlsx檔案(*.xlsx) | *.xlsx";
+            open.FileName = "";
+            // open.Filter = "所有檔案(*.*) | *.* | xlsx檔案(*.xlsx) | *.xlsx";
             
             if (subName == "xlsx")
             {
@@ -30,11 +30,6 @@ namespace Classes
                 //open.FilterIndex = 1;
             }
 
-            if (type == "save")
-            {
-                if (open.ShowDialog() != DialogResult.OK) return open.FileName;
-            }
-
             if (open.FileName != null && open.ShowDialog() == DialogResult.OK)
             {
                 return open.FileName;
@@ -44,6 +39,32 @@ namespace Classes
             }
 
             return null;
+        }
+
+        public string saveFileName(string subName)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Title = "選擇檔案";
+            save.InitialDirectory =
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
+            save.FileName = $"{date}.{subName}";
+            // save.Filter = "所有檔案(*.*) | *.* Excel檔案(*.xlsx) | *.xlsx";
+
+            if (subName == "xlsx")
+            {
+                save.Filter = "xlsx檔案(*.xlsx) | *.xlsx";
+                //save.FilterIndex = 2;
+            }
+            else
+            {
+                save.Filter = "所有檔案(*.*) | *.*";
+                //save.FilterIndex = 1;
+            }
+
+            if (save.ShowDialog() != DialogResult.OK) return null;
+
+            return save.FileName;
         }
 
         public void read_xlsx(string fileName, DataGridViewRowCollection rows)
@@ -100,7 +121,7 @@ namespace Classes
             //save.Filter = "*.xlsx | *.xlsx";
             //if (save.ShowDialog() != DialogResult.OK) return;
             // Excel 物件
-            fileName = $"{fileName}.xlsx";
+            //fileName = $"{fileName}";
             Excel.Application xls = null;
             try
             {

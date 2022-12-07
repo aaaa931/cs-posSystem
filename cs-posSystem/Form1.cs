@@ -167,92 +167,9 @@ namespace cs_posSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // 1. 找出 excel 檔案位置
-            //OpenFileDialog dialog = new OpenFileDialog();
-            //dialog.Title = "選擇 excel 檔案";
-            //dialog.InitialDirectory = ".\\";
-            //dialog.Filter = "excel files(*.*)| *.xlsx";
-            //if (dialog.FileName != null && dialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    form_excel form_excel = new form_excel(dialog.FileName);
-            //    form_excel.ShowDialog();
-            //}
-
-            //DataGridViewRowCollection rows = dataTable.Rows;
-            //// 設定儲存excel檔
-            //SaveFileDialog save = new SaveFileDialog();
-            //save.InitialDirectory =
-            //Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //save.FileName = "Export_Chart_Data";
-            //save.Filter = "*.xlsx | *.xlsx";
-            //if (save.ShowDialog() != DialogResult.OK) return;
-            //// Excel 物件
-            //Excel.Application xls = null;
-            //try
-            //{
-            //    // 打開excel
-            //    xls = new Excel.Application();
-            //    // 新增第一個sheet
-            //    // Excel WorkBook
-            //    Excel.Workbook book = xls.Workbooks.Add();
-            //    //Excel.Worksheet Sheet = (Excel.Worksheet)book.Worksheets[1];
-            //    Excel.Worksheet Sheet = xls.ActiveSheet;
-            //    // 把資料塞進 Excel 內
-            //    // 標題
-            //    string[] titles = new string[] { "編號", "日期", "類別", "名稱", "單價", "數量", "總價" };
-
-            //    for (int i = 0; i < titles.Length; i++)
-            //    {
-            //        Sheet.Cells[1, i + 1] = titles[i];
-            //    }
-            //    // 內容
-            //    for (int i = 1; i < rows.Count; i++)
-            //    {
-            //        //Sheet.Cells[i + 1, 1] = rows[i - 1].Cells[0].Value;
-            //        //Sheet.Cells[i + 1, 2] = rows[i - 1].Cells[1].Value;
-            //        for (int j = 0; j < 7; j++)
-            //        {
-            //            Sheet.Cells[i + 1, j + 1] = rows[i - 1].Cells[j].Value;
-            //        }
-            //    }
-
-            //    // 新增第二個sheet，放到最後一個
-            //    // Excel WorkBook
-            //    // Excel.Worksheet Sheet2 = book.Sheets.Add(After: book.Sheets[book.Sheets.Count]);
-            //    // Sheet2.Name = "1234";
-            //    // 把資料塞進 Excel 內
-            //    // 標題
-            //    // Sheet2.Cells[1, 1] = "身高範圍";
-            //    // Sheet2.Cells[1, 2] = "學生統計";
-            //    // 內容
-            //    /*for (int k = 11; k < 110; k++)
-            //    {
-            //        Sheet2.Cells[k + 1, 1] = k;
-            //        Sheet2.Cells[k + 1, 2] = 2 * k;
-            //    }*/
-            //    // 新增第三個sheet，放到第一個
-            //    // Excel WorkBook
-            //    /*Excel.Worksheet Sheet3 = book.Sheets.Add(Before: book.Sheets[1]);
-            //    Sheet3.Name = "第0頁";
-            //    // 把資料塞進 Excel 內
-            //    // 標題
-            //    Sheet3.Cells[1, 1] = "我是第一頁";
-            //    Sheet3.Cells[1, 2] = "哇哈哈";
-            //    // 修改第三頁sheet
-            //    book.Sheets[book.Sheets.Count].Cells[4, 5] = "補充說明";*/
-            //    // 儲存檔案
-            //    book.SaveAs(save.FileName);
-            //}
-            //catch (Exception err)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    xls.Quit();
-            //}
             Classes.File file = new Classes.File();
-            string fileName = file.readFileName("save", "xlsx");
+            string fileName = file.saveFileName("xlsx");
+            MessageBox.Show(fileName);
             DataGridViewRowCollection rows = dataTable.Rows;
             file.write_xlsx(fileName, rows);
         }
@@ -344,7 +261,6 @@ namespace cs_posSystem
             DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
             DBConfig.sqlite_cmd.ExecuteNonQuery();
             Show_DB();
-
         }
 
         public void write_csv(string fileName)
@@ -388,7 +304,7 @@ namespace cs_posSystem
         {
             //string fileName = readFileDialog();
             Classes.File file = new Classes.File();
-            string fileName = file.readFileName("open", "all");
+            string fileName = file.readFileName("all");
             DataGridViewRowCollection rows = dataTable.Rows;
 
             if (fileName == null)
@@ -407,6 +323,35 @@ namespace cs_posSystem
             {
                 // read_pdf(fileName);
             }
+        }
+
+        private void btn_testPlot_Click(object sender, EventArgs e)
+        {
+            DataGridViewRowCollection rows = dataTable.Rows;
+            DateTime[] dates = new DateTime[rows.Count];
+            string[] names = new string[rows.Count];
+            double[] prices = new double[rows.Count];
+            double[] amounts = new double[rows.Count];        
+
+            for (int i = 0; i < rows.Count - 1; i++)
+            {
+                if (rows[i].Cells[2].Value.ToString() == "出貨")
+                {
+                    names[i] = rows[i].Cells[3].Value.ToString();
+                    prices[i] = Convert.ToDouble(rows[i].Cells[4].Value.ToString());
+                    amounts[i] = Convert.ToDouble(rows[i].Cells[5].Value.ToString());
+                }
+
+                //MessageBox.Show(rows[i].Cells[1].Value.ToString());
+                dates[i] = Convert.ToDateTime(rows[i].Cells[1].Value.ToString());
+            }
+
+            // data 去重複，需修改
+            // test
+
+            form_plot plot = new form_plot();
+            plot.plot_pie(amounts, names);
+            plot.ShowDialog();
         }
     }
 }
