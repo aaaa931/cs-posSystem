@@ -1,6 +1,7 @@
 ﻿using ExcelDataReader.Log;
 using Microsoft.Office.Interop.Word;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,6 +34,7 @@ using iText.Layout.Properties;
 using iText.Kernel.Pdf.Canvas.Draw;
 using PDF_Document = iText.Layout.Document;
 using PDF_Paragraph = iText.Layout.Element.Paragraph;
+using PDF_Table = iText.Layout.Element.Table;
 
 namespace cs_posSystem
 {
@@ -452,12 +454,27 @@ namespace cs_posSystem
         private void addPdf(string dst)
         {
             // 1. create pdf
-            PdfWriter writer = new PdfWriter(dst);
+            string tempDst = dst.Replace(".pdf", "_temp.pdf");
+            PdfWriter writer = new PdfWriter(tempDst);
             PdfDocument pdf = new PdfDocument(writer);
-            PDF_Document document = new PDF_Document(pdf);
+            PDF_Document document = new PDF_Document(pdf, PageSize.A4.Rotate());
+            document.SetMargins(20, 20, 20, 20);
             Classes.iText_pdf itext_pdf = new Classes.iText_pdf();
             Classes.File file = new Classes.File();
             DialogResult result = MessageBox.Show("是否需要匯入圖片", "匯入圖片", MessageBoxButtons.YesNoCancel);
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
+            DataGridViewRowCollection rows = dataTable.Rows;
+            string[,] table = new string[rows.Count, rows[0].Cells.Count];
+            //string[] row = new string[rows[0].Cells.Count];
+
+            for (int i = 0; i < rows.Count - 1; i++)
+            {
+                for (int j = 0; j < rows[i].Cells.Count; j++)
+                {
+                    Console.WriteLine(rows[i].Cells[j].Value.ToString());
+                    table[i, j] = rows[i].Cells[j].Value.ToString();
+                }
+            }
 
             if (result == DialogResult.Yes)
             {
@@ -469,25 +486,33 @@ namespace cs_posSystem
             // 2. 加文字
 
             // 2.1. add header
-            itext_pdf.addTitle1(document, "測試標題1");
-            itext_pdf.addTitle2(document, "測試標題2");
+            itext_pdf.addTitle1(document, $"{date} 存貨報表");
+            //itext_pdf.addTitle2(document, "測試標題2");
             itext_pdf.addHr(document);
-            itext_pdf.addParagraph(document, "MLB將迎來史上最特別的一次季後賽" +
-                "，共計16隊、縮水且密集賽事，預期會出現爆冷劇本！MLB28日宣告2個聯盟" +
-                "、共計16隊的季後賽對戰組合出爐，由於賽制改動為各聯盟擴軍8隊，系列賽" +
-                "將增多一輪，首輪將是捉對廝殺的3戰2勝制，密集賽程更幾乎沒有休兵日，讓" +
-                "專家推測，今年季後賽會讓各隊用盡投手戰力，恐怕會是史上最大比分的一年，" +
-                "也讓爆冷機率上升。");
-            itext_pdf.addParagraph(document, "根據《今日美國報》報導，美職28日賽後確定了16" +
-                "支季後賽球隊的對戰席次，戰況膠著的國聯因巨人、費城人都輸球，釀酒人搶" +
-                "下最後一張晉級門票，他們將作客對上頭號種子道奇，國聯第2種子勇士將迎戰" +
-                "紅人，第3種子小熊將迎戰今年鹹魚大翻身的馬林魚，4、5種子教士與紅雀正面" +
-                "對決。", marginTop: 555, marginLeft: 123);
+            itext_pdf.addParagraph(document, $"報表日期：{date}", align: TextAlignment.RIGHT);
+            //itext_pdf.addParagraph(document, "根據《今日美國報》報導，美職28日賽後確定了16" +
+            //    "支季後賽球隊的對戰席次，戰況膠著的國聯因巨人、費城人都輸球，釀酒人搶" +
+            //    "下最後一張晉級門票，他們將作客對上頭號種子道奇，國聯第2種子勇士將迎戰" +
+            //    "紅人，第3種子小熊將迎戰今年鹹魚大翻身的馬林魚，4、5種子教士與紅雀正面" +
+            //    "對決。", marginTop: 555, marginLeft: 123);
             itext_pdf.addNote(pdf, text: "便利貼黏貼處");
+            itext_pdf.addTable(document, table);
 
             document.Close();
             //pdf.Close();
             //writer.Close();
+            // 4. edit existed pdf
+            PdfReader reader2 = new PdfReader(tempDst);
+            PdfWriter writer2 = new PdfWriter(dst);
+            PdfDocument pdfDoc2 = new PdfDocument(reader2, writer2);
+            PDF_Document document2 = new PDF_Document(pdfDoc2);
+
+            // 5. add Page numbers
+            itext_pdf.addPageNum(pdfDoc2, document2); // 右上角的編碼
+            itext_pdf.addWaterMark(pdfDoc2, document2);
+            document2.Close();
+            file.delete_file(tempDst);
+
             MessageBox.Show($"匯出 PDF 成功");
         }
 

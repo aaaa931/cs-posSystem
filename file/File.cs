@@ -166,5 +166,21 @@ namespace Classes
                 xls.Quit();
             }
         }
+        public void delete_file(string fileName)
+        {
+            if (System.IO.File.Exists(fileName))
+            {
+                try
+                {
+                    System.IO.File.Delete(fileName);
+                } catch (Exception e)
+                {
+                    MessageBox.Show($"檔案刪除錯誤，{e}");
+                }
+            } else
+            {
+                MessageBox.Show($"檔案不存在");
+            }
+        }
     }
 }
