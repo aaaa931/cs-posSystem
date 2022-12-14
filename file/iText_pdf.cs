@@ -168,7 +168,7 @@ namespace Classes
                         }
                         else
                         {
-                            Console.WriteLine($"i = {i}, j = {j}");
+                            //Console.WriteLine($"i = {i}, j = {j}");
                             addTableCell(table, data[i, j], type: true);
                         }
                     } else
