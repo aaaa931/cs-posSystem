@@ -1,10 +1,7 @@
 ﻿using ExcelDataReader.Log;
 using Microsoft.Office.Interop.Word;
 using System;
-<<<<<<< HEAD
 using System.IO;
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +18,6 @@ using Application = System.Windows.Forms.Application;
 using Excel = Microsoft.Office.Interop.Excel;
 using Classes;
 using System.Diagnostics;
-<<<<<<< HEAD
 using ScottPlot.Plottable;
 using iText.Forms;
 using iText.IO.Font;
@@ -39,28 +35,21 @@ using iText.Kernel.Pdf.Canvas.Draw;
 using PDF_Document = iText.Layout.Document;
 using PDF_Paragraph = iText.Layout.Element.Paragraph;
 using PDF_Table = iText.Layout.Element.Table;
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
 
 namespace cs_posSystem
 {
     public partial class Form1 : Form
     {
-<<<<<<< HEAD
+
         // ScottPlot start
         private Crosshair Crosshair;
         // ScottPlot end
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
         public Form1()
         {
             InitializeComponent();
 
-<<<<<<< HEAD
             var plt = formsPlot1.Plot;
 
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             // show login form dialog
             Form2 from_login;
             from_login = new Form2();
@@ -69,7 +58,7 @@ namespace cs_posSystem
             Load_DB();
             Show_DB();
             this.label5.Text = index.ToString();
-<<<<<<< HEAD
+
 
             //ScottPlot start
             Crosshair = formsPlot1.Plot.AddCrosshair(0, 0);
@@ -82,8 +71,6 @@ namespace cs_posSystem
             // Set axis limits to control the view
             // (min x, max x, min y, max y)
             plt.SetAxisLimits(0, 100, -25, 25);
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
         }
 
         int index = 1;
@@ -381,12 +368,7 @@ namespace cs_posSystem
             DateTime[] dates = new DateTime[rows.Count];
             string[] names = new string[rows.Count];
             double[] prices = new double[rows.Count];
-<<<<<<< HEAD
             double[] amounts = new double[rows.Count];
-            
-=======
-            double[] amounts = new double[rows.Count];        
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
 
             for (int i = 0; i < rows.Count - 1; i++)
             {
@@ -404,7 +386,7 @@ namespace cs_posSystem
             // data 去重複，需修改
             // test
 
-<<<<<<< HEAD
+
             //form_plot plot = new form_plot();
             //plot.plot_pie(amounts, names);
             //plot.ShowDialog();
@@ -510,11 +492,6 @@ namespace cs_posSystem
             //itext_pdf.addTitle2(document, "測試標題2");
             itext_pdf.addHr(document);
             itext_pdf.addParagraph(document, $"報表日期：{date}", align: TextAlignment.RIGHT);
-            //itext_pdf.addParagraph(document, "根據《今日美國報》報導，美職28日賽後確定了16" +
-            //    "支季後賽球隊的對戰席次，戰況膠著的國聯因巨人、費城人都輸球，釀酒人搶" +
-            //    "下最後一張晉級門票，他們將作客對上頭號種子道奇，國聯第2種子勇士將迎戰" +
-            //    "紅人，第3種子小熊將迎戰今年鹹魚大翻身的馬林魚，4、5種子教士與紅雀正面" +
-            //    "對決。", marginTop: 555, marginLeft: 123);
             itext_pdf.addNote(pdf, text: "便利貼黏貼處");
             itext_pdf.addTable(document, table);
 
@@ -539,11 +516,9 @@ namespace cs_posSystem
         private void btn_testPdf_Click(object sender, EventArgs e)
         {
             PrintPDF();
-=======
             form_plot plot = new form_plot();
-            plot.plot_pie(amounts, names);
+            //plot.plot_pie(amounts, names);
             plot.ShowDialog();
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
         }
     }
 }

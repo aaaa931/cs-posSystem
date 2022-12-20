@@ -24,14 +24,10 @@ namespace Classes
             {
                 open.Filter = "xlsx檔案(*.xlsx) | *.xlsx";
                 //open.FilterIndex = 2;
-<<<<<<< HEAD
             } else if (subName == "jpg" || subName == "png")
             {
                 open.Filter = "jpg檔案(*.jpg) | *.jpg | png檔案(*.png) | *.jpg";
-            }
-=======
             } else
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             {
                 open.Filter = "所有檔案(*.*) | *.*";
                 //open.FilterIndex = 1;
@@ -51,16 +47,13 @@ namespace Classes
         public string saveFileName(string subName)
         {
             SaveFileDialog save = new SaveFileDialog();
-<<<<<<< HEAD
             save.Title = "儲存檔案";
             save.InitialDirectory =
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             save.RestoreDirectory = true;
-=======
             save.Title = "選擇檔案";
             save.InitialDirectory =
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             string date = DateTime.Now.ToString("yyyy-MM-dd");
             save.FileName = $"{date}.{subName}";
             // save.Filter = "所有檔案(*.*) | *.* Excel檔案(*.xlsx) | *.xlsx";
@@ -68,21 +61,13 @@ namespace Classes
             if (subName == "xlsx")
             {
                 save.Filter = "xlsx檔案(*.xlsx) | *.xlsx";
-<<<<<<< HEAD
             } else if (subName == "pdf")
             {
                 save.Filter = "pdf檔案(*.pdf) | *.pdf";
-=======
-                //save.FilterIndex = 2;
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             }
             else
             {
                 save.Filter = "所有檔案(*.*) | *.*";
-<<<<<<< HEAD
-=======
-                //save.FilterIndex = 1;
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             }
 
             if (save.ShowDialog() != DialogResult.OK) return null;
@@ -184,7 +169,6 @@ namespace Classes
                 xls.Quit();
             }
         }
-<<<<<<< HEAD
         public void delete_file(string fileName)
         {
             if (System.IO.File.Exists(fileName))
@@ -201,7 +185,5 @@ namespace Classes
                 MessageBox.Show($"檔案不存在");
             }
         }
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
     }
 }

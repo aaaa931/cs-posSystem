@@ -97,11 +97,8 @@ namespace cs_posSystem
         // 滑鼠移動進入圖表時，顯示座標
         private void formsPlot1_MouseEnter(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             Crosshair.IsVisible = true;
-=======
             //Crosshair.IsVisible = true;
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
         }
 
         // 滑鼠移動時，顯示座標
@@ -110,30 +107,23 @@ namespace cs_posSystem
             (double coordinateX, double coordinateY) =
                                      formsPlot1.GetMouseCoordinates();
 
-<<<<<<< HEAD
             Crosshair.X = coordinateX;
             Crosshair.Y = coordinateY;
 
             formsPlot1.Refresh(lowQuality: true, skipIfCurrentlyRendering: true);
-=======
             //Crosshair.X = coordinateX;
             //Crosshair.Y = coordinateY;
 
             //formsPlot1.Refresh(lowQuality: true, skipIfCurrentlyRendering: true);
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
-
         }
 
         // 滑鼠移動離開圖表時，關閉顯示座標
         private void formsPlot1_MouseLeave(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             Crosshair.IsVisible = false;
             formsPlot1.Refresh();
-=======
             //Crosshair.IsVisible = false;
             //formsPlot1.Refresh();
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
         }
     }
 }

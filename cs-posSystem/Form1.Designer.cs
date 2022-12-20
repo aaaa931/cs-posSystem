@@ -63,20 +63,13 @@ namespace cs_posSystem
             this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-<<<<<<< HEAD
             this.formsPlot1 = new ScottPlot.FormsPlot();
             this.btn_testPlot = new System.Windows.Forms.Button();
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.cbox_good2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
-<<<<<<< HEAD
             this.btn_testPdf = new System.Windows.Forms.Button();
-=======
-            this.btn_testPlot = new System.Windows.Forms.Button();
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -253,7 +246,7 @@ namespace cs_posSystem
             // 開啟檔案ToolStripMenuItem
             // 
             this.開啟檔案ToolStripMenuItem.Name = "開啟檔案ToolStripMenuItem";
-            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.開啟檔案ToolStripMenuItem.Text = "開啟檔案";
             this.開啟檔案ToolStripMenuItem.Click += new System.EventHandler(this.開啟檔案ToolStripMenuItem_Click);
             // 
@@ -397,10 +390,7 @@ namespace cs_posSystem
             // 
             // tabPage2
             // 
-<<<<<<< HEAD
             this.tabPage2.Controls.Add(this.formsPlot1);
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             this.tabPage2.Controls.Add(this.btn_testPlot);
             this.tabPage2.Location = new System.Drawing.Point(4, 36);
             this.tabPage2.Name = "tabPage2";
@@ -410,7 +400,6 @@ namespace cs_posSystem
             this.tabPage2.Text = "出貨圖表";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-<<<<<<< HEAD
             // formsPlot1
             // 
             this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -435,8 +424,6 @@ namespace cs_posSystem
             this.btn_testPlot.UseVisualStyleBackColor = true;
             this.btn_testPlot.Click += new System.EventHandler(this.btn_testPlot_Click);
             // 
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 36);
@@ -483,7 +470,6 @@ namespace cs_posSystem
             this.btn_update.UseVisualStyleBackColor = true;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
-<<<<<<< HEAD
             // btn_testPdf
             // 
             this.btn_testPdf.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -494,28 +480,13 @@ namespace cs_posSystem
             this.btn_testPdf.Text = "測試 PDF";
             this.btn_testPdf.UseVisualStyleBackColor = true;
             this.btn_testPdf.Click += new System.EventHandler(this.btn_testPdf_Click);
-=======
-            // btn_testPlot
-            // 
-            this.btn_testPlot.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_testPlot.Location = new System.Drawing.Point(6, 329);
-            this.btn_testPlot.Name = "btn_testPlot";
-            this.btn_testPlot.Size = new System.Drawing.Size(126, 37);
-            this.btn_testPlot.TabIndex = 17;
-            this.btn_testPlot.Text = "測試圖表";
-            this.btn_testPlot.UseVisualStyleBackColor = true;
-            this.btn_testPlot.Click += new System.EventHandler(this.btn_testPlot_Click);
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1191, 583);
-<<<<<<< HEAD
             this.Controls.Add(this.btn_testPdf);
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.cbox_good2);
@@ -590,11 +561,8 @@ namespace cs_posSystem
         private Button btn_update;
         private ToolStripMenuItem 開啟檔案ToolStripMenuItem;
         private Button btn_testPlot;
-<<<<<<< HEAD
         private ScottPlot.FormsPlot formsPlot1;
         private Button btn_testPdf;
-=======
->>>>>>> 9164ca651487d0cb55ed287fbbdb2923bf577f35
     }
 }
 
