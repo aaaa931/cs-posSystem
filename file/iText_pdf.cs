@@ -54,13 +54,15 @@ namespace Classes
         public void addParagraph(
             Document document,
             string text,
-            float fontSize = 24,
+            float fontSize = 16,
             TextAlignment align = TextAlignment.JUSTIFIED,
             float marginTop = 0,
             float marginLeft = 0
         )
         {
             Paragraph paragraph = new Paragraph(text).SetFont(font_tr);
+            paragraph.SetFontSize(fontSize);
+            paragraph.SetTextAlignment(align);
             paragraph.SetMarginTop(marginTop);
             paragraph.SetMarginLeft(marginLeft);
             document.Add(paragraph);
@@ -111,7 +113,7 @@ namespace Classes
             string fileName,
             float width,
             float height,
-            TextAlignment align = TextAlignment.CENTER,
+            HorizontalAlignment align = HorizontalAlignment.LEFT,
             float marginTop = 0,
             float marginLeft = 0
         )
@@ -124,7 +126,7 @@ namespace Classes
             // 把圖片轉成itext格式
             iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData);
             // 設定圖片置中
-            image.SetTextAlignment(align);
+            image.SetHorizontalAlignment(align);
             // 設定圖片高寬 (option)
             image.SetHeight(height);
             image.SetWidth(width);

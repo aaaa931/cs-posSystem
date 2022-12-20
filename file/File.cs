@@ -26,7 +26,7 @@ namespace Classes
                 //open.FilterIndex = 2;
             } else if (subName == "jpg" || subName == "png")
             {
-                open.Filter = "jpg檔案(*.jpg) | *.jpg | png檔案(*.png) | *.jpg";
+                open.Filter = " jpg檔案(*.jpg) | *.jpg | png檔案(*.png) | *.png";
             } else
             {
                 open.Filter = "所有檔案(*.*) | *.*";

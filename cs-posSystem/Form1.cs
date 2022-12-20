@@ -35,6 +35,7 @@ using iText.Kernel.Pdf.Canvas.Draw;
 using PDF_Document = iText.Layout.Document;
 using PDF_Paragraph = iText.Layout.Element.Paragraph;
 using PDF_Table = iText.Layout.Element.Table;
+using PDF_HorizontalAlignment = iText.Layout.Properties.HorizontalAlignment;
 
 namespace cs_posSystem
 {
@@ -362,35 +363,83 @@ namespace cs_posSystem
             }
         }
 
-        private void btn_testPlot_Click(object sender, EventArgs e)
+        private void btn_plotPie_Click(object sender, EventArgs e)
         {
             DataGridViewRowCollection rows = dataTable.Rows;
-            DateTime[] dates = new DateTime[rows.Count];
-            string[] names = new string[rows.Count];
-            double[] prices = new double[rows.Count];
-            double[] amounts = new double[rows.Count];
+            List<string> names = new List<string>();
+            List<double> totals = new List<double>();
+            int next = 0;
+            Dictionary<string, int> itemMap = new Dictionary<string, int>();
+            formsPlot1.Plot.Clear();
 
             for (int i = 0; i < rows.Count - 1; i++)
             {
+                string name = rows[i].Cells[3].Value.ToString();
+                double total = Convert.ToDouble(rows[i].Cells[6].Value.ToString());
+
                 if (rows[i].Cells[2].Value.ToString() == "出貨")
                 {
-                    names[i] = rows[i].Cells[3].Value.ToString();
-                    prices[i] = Convert.ToDouble(rows[i].Cells[4].Value.ToString());
-                    amounts[i] = Convert.ToDouble(rows[i].Cells[5].Value.ToString());
+                    if (!names.Contains(name))
+                    {
+                        itemMap.Add(name, next);
+                        names.Add(name);
+                        totals.Add(total);
+                        next++;
+                    } else
+                    {
+                        totals[itemMap[name]] += total;
+                    }
                 }
-
-                //MessageBox.Show(rows[i].Cells[1].Value.ToString());
-                dates[i] = Convert.ToDateTime(rows[i].Cells[1].Value.ToString());
             }
 
-            // data 去重複，需修改
-            // test
+            // data 設定條件，需修改
+            Classes.plot plot = new Classes.plot();
+            double[] arr_totals = totals.ToArray();
+            string[] arr_names = names.ToArray();
+            //Console.WriteLine($"totals = {string.Join(", ", totals)}");
+            //Console.WriteLine($"names = {string.Join(", ", names)}");
+            plot.pie(formsPlot1.Plot, arr_totals, arr_names);
+            formsPlot1.Refresh();
+        }
 
+        private void btn_plotBar_Click(object sender, EventArgs e)
+        {
+            DataGridViewRowCollection rows = dataTable.Rows;
+            List<string> names = new List<string>();
+            List<double> totals = new List<double>();
+            int next = 0;
+            Dictionary<string, int> itemMap = new Dictionary<string, int>();
+            formsPlot1.Plot.Clear();
 
-            //form_plot plot = new form_plot();
-            //plot.plot_pie(amounts, names);
-            //plot.ShowDialog();
-            plot_pie(amounts, names);
+            for (int i = 0; i < rows.Count - 1; i++)
+            {
+                string name = rows[i].Cells[3].Value.ToString();
+                double total = Convert.ToDouble(rows[i].Cells[6].Value.ToString());
+
+                if (rows[i].Cells[2].Value.ToString() == "出貨")
+                {
+                    if (!names.Contains(name))
+                    {
+                        itemMap.Add(name, next);
+                        names.Add(name);
+                        totals.Add(total);
+                        next++;
+                    }
+                    else
+                    {
+                        totals[itemMap[name]] += total;
+                    }
+                }
+            }
+
+            // data 設定條件，需修改
+            Classes.plot plot = new Classes.plot();
+            double[] arr_totals = totals.ToArray();
+            string[] arr_names = names.ToArray();
+            //Console.WriteLine($"totals = {string.Join(", ", totals)}");
+            //Console.WriteLine($"names = {string.Join(", ", names)}");
+            plot.bar(formsPlot1.Plot, arr_totals, arr_names);
+            formsPlot1.Refresh();
         }
 
         // 滑鼠移動進入圖表時，顯示座標
@@ -419,27 +468,6 @@ namespace cs_posSystem
             formsPlot1.Refresh();
         }
 
-        public void plot_pie(double[] data, string[] labels)
-        {
-            var plt = formsPlot1.Plot;
-            var pie = plt.AddPie(data);
-            pie.SliceLabels = labels;
-            pie.ShowPercentages = true;
-            pie.ShowLabels = true;
-            pie.Explode = true;
-            plt.Legend();
-
-            // mouse event
-            formsPlot1_MouseLeave(null, null);
-            plt.AddSignal(data);
-
-            // customize the axis labels
-            plt.Title($"{date} 出貨圓餅圖");
-
-            // 4. 將統計圖顯示在GUI上面
-            formsPlot1.Refresh();
-        }
-
         private void PrintPDF()
         {
             // Set the output dir and file name
@@ -463,7 +491,7 @@ namespace cs_posSystem
             document.SetMargins(20, 20, 20, 20);
             Classes.iText_pdf itext_pdf = new Classes.iText_pdf();
             Classes.File file = new Classes.File();
-            DialogResult result = MessageBox.Show("是否需要匯入圖片", "匯入圖片", MessageBoxButtons.YesNoCancel);
+            DialogResult result = MessageBox.Show("是否需要匯入公司圖片", "匯入圖片", MessageBoxButtons.YesNoCancel);
             string date = DateTime.Now.ToString("yyyy-MM-dd");
             DataGridViewRowCollection rows = dataTable.Rows;
             string[,] table = new string[rows.Count, rows[0].Cells.Count];
@@ -481,8 +509,16 @@ namespace cs_posSystem
             if (result == DialogResult.Yes)
             {
                 string imgName = file.readFileName("jpg");
-                itext_pdf.addContentImg(document, imgName, 930, 160, align: TextAlignment.RIGHT);
-                itext_pdf.addFixedImg(pdf, imgName, 930, 160);
+
+                if (imgName == null)
+                {
+                    MessageBox.Show("請選擇圖片");
+                    return;
+                } else
+                {
+                    itext_pdf.addContentImg(document, imgName, 930, 160, align: PDF_HorizontalAlignment.RIGHT);
+                    //itext_pdf.addFixedImg(pdf, imgName, 930, 160);
+                }
             }
 
             // 2. 加文字
@@ -516,9 +552,11 @@ namespace cs_posSystem
         private void btn_testPdf_Click(object sender, EventArgs e)
         {
             PrintPDF();
-            form_plot plot = new form_plot();
+            //form_plot plot = new form_plot();
             //plot.plot_pie(amounts, names);
-            plot.ShowDialog();
+            //plot.ShowDialog();
         }
+
+        
     }
 }

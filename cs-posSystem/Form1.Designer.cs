@@ -64,12 +64,14 @@ namespace cs_posSystem
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.formsPlot1 = new ScottPlot.FormsPlot();
-            this.btn_testPlot = new System.Windows.Forms.Button();
+            this.btn_plotPie = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.cbox_good2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_testPdf = new System.Windows.Forms.Button();
+            this.btn_plotBar = new System.Windows.Forms.Button();
+            this.btn_plotTime = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -390,8 +392,10 @@ namespace cs_posSystem
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn_plotTime);
+            this.tabPage2.Controls.Add(this.btn_plotBar);
             this.tabPage2.Controls.Add(this.formsPlot1);
-            this.tabPage2.Controls.Add(this.btn_testPlot);
+            this.tabPage2.Controls.Add(this.btn_plotPie);
             this.tabPage2.Location = new System.Drawing.Point(4, 36);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -402,27 +406,25 @@ namespace cs_posSystem
             // 
             // formsPlot1
             // 
-            this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.formsPlot1.Location = new System.Drawing.Point(3, 3);
             this.formsPlot1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(738, 326);
+            this.formsPlot1.Size = new System.Drawing.Size(738, 320);
             this.formsPlot1.TabIndex = 18;
             this.formsPlot1.MouseEnter += new System.EventHandler(this.formsPlot1_MouseEnter);
             this.formsPlot1.MouseLeave += new System.EventHandler(this.formsPlot1_MouseLeave);
             this.formsPlot1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formsPlot1_MouseMove);
             // 
-            // btn_testPlot
+            // btn_plotPie
             // 
-            this.btn_testPlot.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_testPlot.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_testPlot.Location = new System.Drawing.Point(3, 329);
-            this.btn_testPlot.Name = "btn_testPlot";
-            this.btn_testPlot.Size = new System.Drawing.Size(738, 37);
-            this.btn_testPlot.TabIndex = 17;
-            this.btn_testPlot.Text = "測試圖表";
-            this.btn_testPlot.UseVisualStyleBackColor = true;
-            this.btn_testPlot.Click += new System.EventHandler(this.btn_testPlot_Click);
+            this.btn_plotPie.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plotPie.Location = new System.Drawing.Point(3, 329);
+            this.btn_plotPie.Name = "btn_plotPie";
+            this.btn_plotPie.Size = new System.Drawing.Size(240, 37);
+            this.btn_plotPie.TabIndex = 17;
+            this.btn_plotPie.Text = "繪製圓餅圖";
+            this.btn_plotPie.UseVisualStyleBackColor = true;
+            this.btn_plotPie.Click += new System.EventHandler(this.btn_plotPie_Click);
             // 
             // tabPage3
             // 
@@ -480,6 +482,27 @@ namespace cs_posSystem
             this.btn_testPdf.Text = "測試 PDF";
             this.btn_testPdf.UseVisualStyleBackColor = true;
             this.btn_testPdf.Click += new System.EventHandler(this.btn_testPdf_Click);
+            // 
+            // btn_plotBar
+            // 
+            this.btn_plotBar.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plotBar.Location = new System.Drawing.Point(252, 329);
+            this.btn_plotBar.Name = "btn_plotBar";
+            this.btn_plotBar.Size = new System.Drawing.Size(240, 37);
+            this.btn_plotBar.TabIndex = 19;
+            this.btn_plotBar.Text = "繪製長條圖";
+            this.btn_plotBar.UseVisualStyleBackColor = true;
+            this.btn_plotBar.Click += new System.EventHandler(this.btn_plotBar_Click);
+            // 
+            // btn_plotTime
+            // 
+            this.btn_plotTime.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plotTime.Location = new System.Drawing.Point(498, 329);
+            this.btn_plotTime.Name = "btn_plotTime";
+            this.btn_plotTime.Size = new System.Drawing.Size(240, 37);
+            this.btn_plotTime.TabIndex = 18;
+            this.btn_plotTime.Text = "繪製趨勢圖";
+            this.btn_plotTime.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -560,9 +583,11 @@ namespace cs_posSystem
         private Button button4;
         private Button btn_update;
         private ToolStripMenuItem 開啟檔案ToolStripMenuItem;
-        private Button btn_testPlot;
+        private Button btn_plotPie;
         private ScottPlot.FormsPlot formsPlot1;
         private Button btn_testPdf;
+        private Button btn_plotTime;
+        private Button btn_plotBar;
     }
 }
 
