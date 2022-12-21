@@ -36,6 +36,7 @@ using PDF_Document = iText.Layout.Document;
 using PDF_Paragraph = iText.Layout.Element.Paragraph;
 using PDF_Table = iText.Layout.Element.Table;
 using PDF_HorizontalAlignment = iText.Layout.Properties.HorizontalAlignment;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace cs_posSystem
 {
@@ -363,82 +364,94 @@ namespace cs_posSystem
             }
         }
 
-        private void btn_plotPie_Click(object sender, EventArgs e)
+        private void getPlotData(List<string> names, List<double> double_datas, int group = 3)
         {
             DataGridViewRowCollection rows = dataTable.Rows;
-            List<string> names = new List<string>();
-            List<double> totals = new List<double>();
+            Dictionary<string, int> map = new Dictionary<string, int>();
             int next = 0;
-            Dictionary<string, int> itemMap = new Dictionary<string, int>();
-            formsPlot1.Plot.Clear();
 
             for (int i = 0; i < rows.Count - 1; i++)
             {
-                string name = rows[i].Cells[3].Value.ToString();
+                string name = rows[i].Cells[group].Value.ToString();
                 double total = Convert.ToDouble(rows[i].Cells[6].Value.ToString());
+
+                if (group == 1)
+                {
+                    // get yyyy-MM-dd
+                    name = name.Substring(0, 9);
+                }
 
                 if (rows[i].Cells[2].Value.ToString() == "出貨")
                 {
                     if (!names.Contains(name))
                     {
-                        itemMap.Add(name, next);
+                        map.Add(name, next);
                         names.Add(name);
-                        totals.Add(total);
+                        double_datas.Add(total);
                         next++;
-                    } else
+                    }
+                    else
                     {
-                        totals[itemMap[name]] += total;
+                        double_datas[map[name]] += total;
                     }
                 }
             }
+        }
+
+        private void btn_plotPie_Click(object sender, EventArgs e)
+        {
+            List<string> names = new List<string>();
+            List<double> totals = new List<double>();
+            formsPlot1.Reset();
+            getPlotData(names, totals);
 
             // data 設定條件，需修改
             Classes.plot plot = new Classes.plot();
             double[] arr_totals = totals.ToArray();
             string[] arr_names = names.ToArray();
-            //Console.WriteLine($"totals = {string.Join(", ", totals)}");
-            //Console.WriteLine($"names = {string.Join(", ", names)}");
+
             plot.pie(formsPlot1.Plot, arr_totals, arr_names);
             formsPlot1.Refresh();
         }
 
         private void btn_plotBar_Click(object sender, EventArgs e)
         {
-            DataGridViewRowCollection rows = dataTable.Rows;
             List<string> names = new List<string>();
             List<double> totals = new List<double>();
-            int next = 0;
-            Dictionary<string, int> itemMap = new Dictionary<string, int>();
-            formsPlot1.Plot.Clear();
-
-            for (int i = 0; i < rows.Count - 1; i++)
-            {
-                string name = rows[i].Cells[3].Value.ToString();
-                double total = Convert.ToDouble(rows[i].Cells[6].Value.ToString());
-
-                if (rows[i].Cells[2].Value.ToString() == "出貨")
-                {
-                    if (!names.Contains(name))
-                    {
-                        itemMap.Add(name, next);
-                        names.Add(name);
-                        totals.Add(total);
-                        next++;
-                    }
-                    else
-                    {
-                        totals[itemMap[name]] += total;
-                    }
-                }
-            }
+            formsPlot1.Reset();
+            getPlotData(names, totals);
 
             // data 設定條件，需修改
             Classes.plot plot = new Classes.plot();
             double[] arr_totals = totals.ToArray();
             string[] arr_names = names.ToArray();
-            //Console.WriteLine($"totals = {string.Join(", ", totals)}");
-            //Console.WriteLine($"names = {string.Join(", ", names)}");
+
             plot.bar(formsPlot1.Plot, arr_totals, arr_names);
+            formsPlot1.Refresh();
+        }
+
+        private void btn_plotRun_Click(object sender, EventArgs e)
+        {
+            List<string> dates = new List<string>();
+            List<double> totals = new List<double>();
+            formsPlot1.Reset();
+            getPlotData(dates, totals, 1);
+
+            Classes.plot plot = new Classes.plot();
+            double[] arr_totals = totals.ToArray();
+            string[] arr_names = dates.ToArray();
+            double[] arr_dates = new double[arr_names.Length];
+            int i = 0;
+
+            foreach (string date in arr_names)
+            {
+                date.Replace("-", "/");
+                arr_dates[i] = Convert.ToDateTime(date).ToOADate();
+            }
+            //Console.WriteLine($"arr_totals = {String.Join(", ", arr_totals)}");
+            //Console.WriteLine($"arr_names = {String.Join(", ", arr_names)}");
+
+            plot.run(formsPlot1.Plot, arr_totals, arr_dates);
             formsPlot1.Refresh();
         }
 
@@ -556,7 +569,5 @@ namespace cs_posSystem
             //plot.plot_pie(amounts, names);
             //plot.ShowDialog();
         }
-
-        
     }
 }

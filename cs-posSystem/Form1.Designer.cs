@@ -63,6 +63,8 @@ namespace cs_posSystem
             this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_plotRun = new System.Windows.Forms.Button();
+            this.btn_plotBar = new System.Windows.Forms.Button();
             this.formsPlot1 = new ScottPlot.FormsPlot();
             this.btn_plotPie = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -70,8 +72,6 @@ namespace cs_posSystem
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_testPdf = new System.Windows.Forms.Button();
-            this.btn_plotBar = new System.Windows.Forms.Button();
-            this.btn_plotTime = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -392,7 +392,7 @@ namespace cs_posSystem
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btn_plotTime);
+            this.tabPage2.Controls.Add(this.btn_plotRun);
             this.tabPage2.Controls.Add(this.btn_plotBar);
             this.tabPage2.Controls.Add(this.formsPlot1);
             this.tabPage2.Controls.Add(this.btn_plotPie);
@@ -403,6 +403,28 @@ namespace cs_posSystem
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "出貨圖表";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btn_plotRun
+            // 
+            this.btn_plotRun.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plotRun.Location = new System.Drawing.Point(498, 329);
+            this.btn_plotRun.Name = "btn_plotRun";
+            this.btn_plotRun.Size = new System.Drawing.Size(240, 37);
+            this.btn_plotRun.TabIndex = 18;
+            this.btn_plotRun.Text = "繪製趨勢圖";
+            this.btn_plotRun.UseVisualStyleBackColor = true;
+            this.btn_plotRun.Click += new System.EventHandler(this.btn_plotRun_Click);
+            // 
+            // btn_plotBar
+            // 
+            this.btn_plotBar.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plotBar.Location = new System.Drawing.Point(252, 329);
+            this.btn_plotBar.Name = "btn_plotBar";
+            this.btn_plotBar.Size = new System.Drawing.Size(240, 37);
+            this.btn_plotBar.TabIndex = 19;
+            this.btn_plotBar.Text = "繪製長條圖";
+            this.btn_plotBar.UseVisualStyleBackColor = true;
+            this.btn_plotBar.Click += new System.EventHandler(this.btn_plotBar_Click);
             // 
             // formsPlot1
             // 
@@ -482,27 +504,6 @@ namespace cs_posSystem
             this.btn_testPdf.Text = "測試 PDF";
             this.btn_testPdf.UseVisualStyleBackColor = true;
             this.btn_testPdf.Click += new System.EventHandler(this.btn_testPdf_Click);
-            // 
-            // btn_plotBar
-            // 
-            this.btn_plotBar.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plotBar.Location = new System.Drawing.Point(252, 329);
-            this.btn_plotBar.Name = "btn_plotBar";
-            this.btn_plotBar.Size = new System.Drawing.Size(240, 37);
-            this.btn_plotBar.TabIndex = 19;
-            this.btn_plotBar.Text = "繪製長條圖";
-            this.btn_plotBar.UseVisualStyleBackColor = true;
-            this.btn_plotBar.Click += new System.EventHandler(this.btn_plotBar_Click);
-            // 
-            // btn_plotTime
-            // 
-            this.btn_plotTime.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plotTime.Location = new System.Drawing.Point(498, 329);
-            this.btn_plotTime.Name = "btn_plotTime";
-            this.btn_plotTime.Size = new System.Drawing.Size(240, 37);
-            this.btn_plotTime.TabIndex = 18;
-            this.btn_plotTime.Text = "繪製趨勢圖";
-            this.btn_plotTime.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -586,7 +587,7 @@ namespace cs_posSystem
         private Button btn_plotPie;
         private ScottPlot.FormsPlot formsPlot1;
         private Button btn_testPdf;
-        private Button btn_plotTime;
+        private Button btn_plotRun;
         private Button btn_plotBar;
     }
 }
