@@ -72,6 +72,7 @@ namespace cs_posSystem
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_testPdf = new System.Windows.Forms.Button();
+            this.btn_write_csv = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -84,7 +85,7 @@ namespace cs_posSystem
             // btn_input
             // 
             this.btn_input.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_input.Location = new System.Drawing.Point(55, 489);
+            this.btn_input.Location = new System.Drawing.Point(55, 519);
             this.btn_input.Name = "btn_input";
             this.btn_input.Size = new System.Drawing.Size(126, 37);
             this.btn_input.TabIndex = 0;
@@ -95,7 +96,7 @@ namespace cs_posSystem
             // btn_output
             // 
             this.btn_output.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_output.Location = new System.Drawing.Point(319, 489);
+            this.btn_output.Location = new System.Drawing.Point(319, 519);
             this.btn_output.Name = "btn_output";
             this.btn_output.Size = new System.Drawing.Size(126, 37);
             this.btn_output.TabIndex = 1;
@@ -106,7 +107,7 @@ namespace cs_posSystem
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(50, 63);
+            this.label1.Location = new System.Drawing.Point(50, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 27);
             this.label1.TabIndex = 2;
@@ -116,7 +117,7 @@ namespace cs_posSystem
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label2.Location = new System.Drawing.Point(50, 117);
+            this.label2.Location = new System.Drawing.Point(50, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 27);
             this.label2.TabIndex = 3;
@@ -126,7 +127,7 @@ namespace cs_posSystem
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(50, 259);
+            this.label3.Location = new System.Drawing.Point(50, 223);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 27);
             this.label3.TabIndex = 4;
@@ -136,7 +137,7 @@ namespace cs_posSystem
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(50, 326);
+            this.label4.Location = new System.Drawing.Point(50, 290);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 27);
             this.label4.TabIndex = 5;
@@ -146,7 +147,7 @@ namespace cs_posSystem
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label5.Location = new System.Drawing.Point(182, 63);
+            this.label5.Location = new System.Drawing.Point(182, 27);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(30, 27);
             this.label5.TabIndex = 6;
@@ -155,7 +156,7 @@ namespace cs_posSystem
             // tbox_price
             // 
             this.tbox_price.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_price.Location = new System.Drawing.Point(123, 258);
+            this.tbox_price.Location = new System.Drawing.Point(123, 222);
             this.tbox_price.Name = "tbox_price";
             this.tbox_price.Size = new System.Drawing.Size(190, 33);
             this.tbox_price.TabIndex = 7;
@@ -163,7 +164,7 @@ namespace cs_posSystem
             // tbox_amount
             // 
             this.tbox_amount.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_amount.Location = new System.Drawing.Point(123, 318);
+            this.tbox_amount.Location = new System.Drawing.Point(123, 282);
             this.tbox_amount.Name = "tbox_amount";
             this.tbox_amount.Size = new System.Drawing.Size(190, 35);
             this.tbox_amount.TabIndex = 8;
@@ -171,9 +172,9 @@ namespace cs_posSystem
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.richTextBox1.Location = new System.Drawing.Point(55, 389);
+            this.richTextBox1.Location = new System.Drawing.Point(55, 353);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(258, 94);
+            this.richTextBox1.Size = new System.Drawing.Size(258, 145);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
@@ -182,7 +183,7 @@ namespace cs_posSystem
             this.groupBox1.Controls.Add(this.rbtn_sale);
             this.groupBox1.Controls.Add(this.rbtn_purchase);
             this.groupBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.groupBox1.Location = new System.Drawing.Point(55, 185);
+            this.groupBox1.Location = new System.Drawing.Point(55, 149);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(258, 58);
             this.groupBox1.TabIndex = 10;
@@ -222,7 +223,7 @@ namespace cs_posSystem
             "口罩",
             "濕度計",
             "濕紙巾"});
-            this.cbox_good.Location = new System.Drawing.Point(123, 114);
+            this.cbox_good.Location = new System.Drawing.Point(123, 78);
             this.cbox_good.Name = "cbox_good";
             this.cbox_good.Size = new System.Drawing.Size(190, 35);
             this.cbox_good.TabIndex = 11;
@@ -233,7 +234,7 @@ namespace cs_posSystem
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1191, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1202, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -258,14 +259,15 @@ namespace cs_posSystem
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tabControl1.Location = new System.Drawing.Point(348, 63);
+            this.tabControl1.Location = new System.Drawing.Point(348, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(752, 409);
+            this.tabControl1.Size = new System.Drawing.Size(752, 471);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btn_write_csv);
             this.tabPage1.Controls.Add(this.button4);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.button2);
@@ -274,16 +276,15 @@ namespace cs_posSystem
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(744, 369);
+            this.tabPage1.Size = new System.Drawing.Size(744, 431);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "資料列表";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Left;
             this.button4.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button4.Location = new System.Drawing.Point(381, 320);
+            this.button4.Location = new System.Drawing.Point(528, 379);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(126, 46);
             this.button4.TabIndex = 18;
@@ -293,9 +294,8 @@ namespace cs_posSystem
             // 
             // button3
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Left;
             this.button3.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button3.Location = new System.Drawing.Point(255, 320);
+            this.button3.Location = new System.Drawing.Point(396, 379);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(126, 46);
             this.button3.TabIndex = 17;
@@ -305,9 +305,8 @@ namespace cs_posSystem
             // 
             // button2
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Left;
             this.button2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button2.Location = new System.Drawing.Point(129, 320);
+            this.button2.Location = new System.Drawing.Point(264, 379);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(126, 46);
             this.button2.TabIndex = 16;
@@ -317,9 +316,8 @@ namespace cs_posSystem
             // 
             // button1
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
             this.button1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button1.Location = new System.Drawing.Point(3, 320);
+            this.button1.Location = new System.Drawing.Point(0, 379);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(126, 46);
             this.button1.TabIndex = 15;
@@ -344,7 +342,7 @@ namespace cs_posSystem
             this.dataTable.Name = "dataTable";
             this.dataTable.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.dataTable.RowTemplate.Height = 65;
-            this.dataTable.Size = new System.Drawing.Size(738, 317);
+            this.dataTable.Size = new System.Drawing.Size(738, 370);
             this.dataTable.TabIndex = 1;
             this.dataTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -392,14 +390,14 @@ namespace cs_posSystem
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.formsPlot1);
             this.tabPage2.Controls.Add(this.btn_plotRun);
             this.tabPage2.Controls.Add(this.btn_plotBar);
-            this.tabPage2.Controls.Add(this.formsPlot1);
             this.tabPage2.Controls.Add(this.btn_plotPie);
             this.tabPage2.Location = new System.Drawing.Point(4, 36);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(744, 369);
+            this.tabPage2.Size = new System.Drawing.Size(744, 431);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "出貨圖表";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -407,7 +405,7 @@ namespace cs_posSystem
             // btn_plotRun
             // 
             this.btn_plotRun.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plotRun.Location = new System.Drawing.Point(498, 329);
+            this.btn_plotRun.Location = new System.Drawing.Point(498, 388);
             this.btn_plotRun.Name = "btn_plotRun";
             this.btn_plotRun.Size = new System.Drawing.Size(240, 37);
             this.btn_plotRun.TabIndex = 18;
@@ -418,7 +416,7 @@ namespace cs_posSystem
             // btn_plotBar
             // 
             this.btn_plotBar.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plotBar.Location = new System.Drawing.Point(252, 329);
+            this.btn_plotBar.Location = new System.Drawing.Point(252, 388);
             this.btn_plotBar.Name = "btn_plotBar";
             this.btn_plotBar.Size = new System.Drawing.Size(240, 37);
             this.btn_plotBar.TabIndex = 19;
@@ -431,7 +429,7 @@ namespace cs_posSystem
             this.formsPlot1.Location = new System.Drawing.Point(3, 3);
             this.formsPlot1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(738, 320);
+            this.formsPlot1.Size = new System.Drawing.Size(738, 378);
             this.formsPlot1.TabIndex = 18;
             this.formsPlot1.MouseEnter += new System.EventHandler(this.formsPlot1_MouseEnter);
             this.formsPlot1.MouseLeave += new System.EventHandler(this.formsPlot1_MouseLeave);
@@ -440,7 +438,7 @@ namespace cs_posSystem
             // btn_plotPie
             // 
             this.btn_plotPie.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plotPie.Location = new System.Drawing.Point(3, 329);
+            this.btn_plotPie.Location = new System.Drawing.Point(0, 388);
             this.btn_plotPie.Name = "btn_plotPie";
             this.btn_plotPie.Size = new System.Drawing.Size(240, 37);
             this.btn_plotPie.TabIndex = 17;
@@ -468,7 +466,7 @@ namespace cs_posSystem
             "口罩",
             "濕度計",
             "濕紙巾"});
-            this.cbox_good2.Location = new System.Drawing.Point(123, 155);
+            this.cbox_good2.Location = new System.Drawing.Point(123, 119);
             this.cbox_good2.Name = "cbox_good2";
             this.cbox_good2.Size = new System.Drawing.Size(190, 35);
             this.cbox_good2.TabIndex = 14;
@@ -476,7 +474,7 @@ namespace cs_posSystem
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(723, 478);
+            this.pictureBox1.Location = new System.Drawing.Point(726, 504);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(374, 67);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -486,7 +484,7 @@ namespace cs_posSystem
             // btn_update
             // 
             this.btn_update.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_update.Location = new System.Drawing.Point(187, 489);
+            this.btn_update.Location = new System.Drawing.Point(187, 519);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(126, 37);
             this.btn_update.TabIndex = 16;
@@ -497,7 +495,7 @@ namespace cs_posSystem
             // btn_testPdf
             // 
             this.btn_testPdf.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_testPdf.Location = new System.Drawing.Point(451, 489);
+            this.btn_testPdf.Location = new System.Drawing.Point(451, 519);
             this.btn_testPdf.Name = "btn_testPdf";
             this.btn_testPdf.Size = new System.Drawing.Size(126, 37);
             this.btn_testPdf.TabIndex = 17;
@@ -505,11 +503,22 @@ namespace cs_posSystem
             this.btn_testPdf.UseVisualStyleBackColor = true;
             this.btn_testPdf.Click += new System.EventHandler(this.btn_testPdf_Click);
             // 
+            // btn_write_csv
+            // 
+            this.btn_write_csv.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_write_csv.Location = new System.Drawing.Point(132, 379);
+            this.btn_write_csv.Name = "btn_write_csv";
+            this.btn_write_csv.Size = new System.Drawing.Size(126, 46);
+            this.btn_write_csv.TabIndex = 19;
+            this.btn_write_csv.Text = "匯出 csv";
+            this.btn_write_csv.UseVisualStyleBackColor = true;
+            this.btn_write_csv.Click += new System.EventHandler(this.btn_write_csv_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1191, 583);
+            this.ClientSize = new System.Drawing.Size(1202, 587);
             this.Controls.Add(this.btn_testPdf);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.pictureBox1);
@@ -589,6 +598,7 @@ namespace cs_posSystem
         private Button btn_testPdf;
         private Button btn_plotRun;
         private Button btn_plotBar;
+        private Button btn_write_csv;
     }
 }
 

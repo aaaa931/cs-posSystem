@@ -10,7 +10,8 @@ namespace Classes
 {
     public class plot
     {
-        private string date = DateTime.Now.ToString("yyyy-MM-dd");
+        private string date = DateTime.Now.ToString("yyyy-MM-dd").Substring(0, 8);
+        private Classes.File file = new Classes.File();
         public void pie(ScottPlot.Plot plt, double[] data, string[] labels, string title = "")
         {
             //var plt = formsPlot1.Plot;
@@ -21,20 +22,8 @@ namespace Classes
             pie.ShowLabels = true;
             pie.Explode = true;
             plt.Legend();
-
-            // mouse event
-            //formsPlot1_MouseLeave(null, null);
-            //plt.AddSignal(data);
-
-            // Set axis limits to control the view
-            // (min x, max x, min y, max y)
-            //plt.SetAxisLimits(0, 100, -25, 25);
-
-            // customize the axis labels
             plt.Title($"{date} 出貨{title}圓餅圖");
-
-            // 4. 將統計圖顯示在GUI上面
-            //formsPlot1.Refresh();
+            plt.SaveFig($"pie.png");
         }
 
         public void bar(ScottPlot.Plot plt, double[] data, string[] labels, string title = "")
@@ -48,23 +37,10 @@ namespace Classes
 
             plt.Clear();
             plt.AddBar(data, positions);
-            //plt.Legend();
-
-            // mouse event
-            //formsPlot1_MouseLeave(null, null);
             plt.XTicks(positions, labels);
-
-            // Set axis limits to control the view
-            // (min x, max x, min y, max y)
-            //plt.SetAxisLimits(0, 100, -25, 25);
-
-            // customize the axis labels
             plt.Title($"{date} 出貨{title}長條圖");
             plt.SetAxisLimits(yMin: 0);
-            //plt.SaveFig("bar_labels.png");
-
-            // 4. 將統計圖顯示在GUI上面
-            //formsPlot1.Refresh();
+            plt.SaveFig($"bar.png");
         }
 
         public void run(ScottPlot.Plot plt, double[] datas, double[] dates, string title = "")
@@ -82,6 +58,7 @@ namespace Classes
 
             // add some extra space for rotated ticks
             plt.XAxis.SetSizeLimit(min: 50);
+            plt.SaveFig($"run.png");
         }
     }
 }

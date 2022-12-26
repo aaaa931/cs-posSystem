@@ -49,6 +49,8 @@ namespace Classes
         public void addHr(Document document)
         {
             LineSeparator ls = new LineSeparator(new SolidLine());
+            ls.SetMarginTop(20);
+            ls.SetMarginBottom(20);
             document.Add(ls);
         }
         public void addParagraph(
@@ -111,8 +113,8 @@ namespace Classes
         public void addContentImg(
             Document document,
             string fileName,
-            float width,
-            float height,
+            float width = 0,
+            float height = 0,
             HorizontalAlignment align = HorizontalAlignment.LEFT,
             float marginTop = 0,
             float marginLeft = 0
@@ -128,8 +130,16 @@ namespace Classes
             // 設定圖片置中
             image.SetHorizontalAlignment(align);
             // 設定圖片高寬 (option)
-            image.SetHeight(height);
-            image.SetWidth(width);
+            if (width == 0 || height == 0)
+            {
+                Classes.File file = new Classes.File();
+                image.SetHeight(file.getHeight(fileName));
+                image.SetWidth(file.getWidth(fileName));
+            } else
+            {
+                image.SetHeight(height);
+                image.SetWidth(width);
+            }
             // 設定圖片離左邊多遠 (option)
             image.SetMarginLeft(marginLeft);
             // 設定圖片離上面多遠 (option)

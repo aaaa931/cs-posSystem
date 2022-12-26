@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Classes
@@ -32,6 +33,11 @@ namespace Classes
                 open.Filter = "所有檔案(*.*) | *.*";
                 //open.FilterIndex = 1;
             }
+
+            /*if (open.ShowDialog() == DialogResult.Cancel)
+            {
+                return "cancel";
+            }*/
 
             if (open.FileName != null && open.ShowDialog() == DialogResult.OK)
             {
@@ -69,6 +75,11 @@ namespace Classes
             {
                 save.Filter = "所有檔案(*.*) | *.*";
             }
+
+            /*if (save.ShowDialog() == DialogResult.Cancel)
+            {
+                return "cancel";
+            }*/
 
             if (save.ShowDialog() != DialogResult.OK) return null;
 
@@ -120,16 +131,6 @@ namespace Classes
 
         public void write_xlsx(string fileName, DataGridViewRowCollection rows)
         {
-            // DataGridViewRowCollection rows = dataTable.Rows;
-            // 設定儲存excel檔
-            //SaveFileDialog save = new SaveFileDialog();
-            //save.InitialDirectory =
-            //Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //save.FileName = "Export_Chart_Data";
-            //save.Filter = "*.xlsx | *.xlsx";
-            //if (save.ShowDialog() != DialogResult.OK) return;
-            // Excel 物件
-            //fileName = $"{fileName}";
             Excel.Application xls = null;
             try
             {
@@ -169,6 +170,96 @@ namespace Classes
                 xls.Quit();
             }
         }
+
+        public void read_csv(string fileName, DataGridViewRowCollection rows)
+        {
+            //StreamReader sr = new StreamReader(fileName);
+            //List<string> result = new List<string>();
+
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                List<string> dataList = new List<string> ();
+
+                try
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        //string row = sr.ReadLine().Replace(",", "");
+                        dataList.Add(sr.ReadLine().Replace(",", ""));
+                    }
+                } catch (Exception e)
+                {
+                    Console.WriteLine($"[Error] File.cs read_csv is failed at line 192, e = {e}");
+                }
+
+                rows.Clear();
+
+                // 等待修改
+                //for (int i = 0; i < range.Rows.Count; i++)
+                //{
+                //    // cell[1,] 是標題列，需要去掉
+                //    Object[] row = new Object[range.Columns.Count];
+
+                //    for (int j = 0; j < range.Columns.Count; j++)
+                //    {
+                //        row[j] = Sheet.Cells[i + 2, j + 1].Value;
+                //    }
+
+                //    rows.Add(row);
+                //}
+
+                //string[] data = dataList.
+                //return dataList.ToArray()
+            }
+        }
+
+        public void write_csv(string fileName, DataGridViewRowCollection rows)
+        {
+            List<string> dataList = new List<string> ();
+            // 標題
+            string[] titles = new string[] { "編號", "日期", "類別", "名稱", "單價", "數量", "總價" };
+            string line = "";
+            string data = "";
+
+            foreach (string title in titles)
+            {
+                line += $",{title}";
+            }
+
+            dataList.Add(line);
+
+            // 內容
+            for (int i = 1; i < rows.Count; i++)
+            {
+                line = "";
+
+                for (int j = 0; j < 7; j++)
+                {
+                    line += $",{rows[i - 1].Cells[j].Value}";
+                }
+
+                dataList.Add(line);
+            }
+            
+            foreach (string dataLine in dataList)
+            {
+                data += $"{dataLine}\n";
+            }
+
+            try
+            {
+                // Create and write the csv file
+                System.IO.File.WriteAllText(fileName, data.ToString(), Encoding.UTF8);
+            } catch (Exception e)
+            {
+                Console.WriteLine($"[Error] File.cs write_csv is failed at line 232, e = {e}");
+            }
+
+            // To append more lines to the csv file
+            //System.IO.File.AppendAllText(fileName, sb.ToString());
+        }
+
+
         public void delete_file(string fileName)
         {
             if (System.IO.File.Exists(fileName))
@@ -176,14 +267,58 @@ namespace Classes
                 try
                 {
                     System.IO.File.Delete(fileName);
-                } catch (Exception e)
-                {
-                    MessageBox.Show($"檔案刪除錯誤，{e}");
                 }
-            } else
+                catch (Exception e)
+                {
+                    //MessageBox.Show($"檔案刪除錯誤，{e}");
+                    Console.WriteLine($"檔案刪除錯誤，{e}");
+                }
+            }
+            else
             {
                 MessageBox.Show($"檔案不存在");
             }
+        }
+
+        public Boolean exists_file(string fileName)
+        {
+            if (System.IO.File.Exists(fileName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int getWidth(string fileName)
+        {
+            try
+            {
+                System.Drawing.Image img = System.Drawing.Image.FromFile(fileName);
+                return img.Width;
+            } catch (Exception e)
+            {
+                Console.WriteLine($"[Error] file.cs getWidth() is error, e = {e}");
+            }
+
+            return 0;
+        }
+
+        public int getHeight(string fileName)
+        {
+            try
+            {
+                System.Drawing.Image img = System.Drawing.Image.FromFile(fileName);
+                return img.Height;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[Error] file.cs getHeight() is error, e = {e}");
+            }
+
+            return 0;
         }
     }
 }

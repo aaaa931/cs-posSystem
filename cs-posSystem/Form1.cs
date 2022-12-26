@@ -46,6 +46,7 @@ namespace cs_posSystem
         // ScottPlot start
         private Crosshair Crosshair;
         // ScottPlot end
+        private Classes.File file = new Classes.File();
         public Form1()
         {
             InitializeComponent();
@@ -61,14 +62,12 @@ namespace cs_posSystem
             Show_DB();
             this.label5.Text = index.ToString();
 
-
             //ScottPlot start
             Crosshair = formsPlot1.Plot.AddCrosshair(0, 0);
             formsPlot1.Refresh();
             //ScottPlot end
 
             formsPlot1_MouseLeave(null, null);
-            //plt.AddSignal(values);
 
             // Set axis limits to control the view
             // (min x, max x, min y, max y)
@@ -89,7 +88,6 @@ namespace cs_posSystem
         {
             DBConfig.sqlite_connect = new SQLiteConnection(DBConfig.dbPath);
             DBConfig.sqlite_connect.Open();// Open
-
         }
         private void Show_DB()
         {
@@ -122,7 +120,6 @@ namespace cs_posSystem
                 DBConfig.sqlite_datareader.Close();
             }
         }
-
 
         private void btn_input_Click(object sender, EventArgs e)
         {
@@ -206,7 +203,6 @@ namespace cs_posSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Classes.File file = new Classes.File();
             string fileName = file.saveFileName("xlsx");
             MessageBox.Show(fileName);
             DataGridViewRowCollection rows = dataTable.Rows;
@@ -243,6 +239,14 @@ namespace cs_posSystem
         {
             form_mdi form_Mdi = new form_mdi();
             form_Mdi.Show();
+        }
+
+        private void btn_write_csv_Click(object sender, EventArgs e)
+        {
+            string fileName = file.saveFileName("csv");
+            //MessageBox.Show(fileName);
+            DataGridViewRowCollection rows = dataTable.Rows;
+            file.write_csv(fileName, rows);
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -302,33 +306,6 @@ namespace cs_posSystem
             Show_DB();
         }
 
-        public void write_csv(string fileName)
-        {
-            // 待驗證
-            // 設定儲存excel檔
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory =
-            Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            save.FileName = "Export_Chart_Data.csv";
-            if (save.ShowDialog() != DialogResult.OK) return;
-            string strFilePath = save.FileName;
-            StringBuilder sbOutput = new StringBuilder();
-
-            for (int i = 0; i < 10; i++)
-            {
-                string tmp = $"{i}";
-                for (int j = 1; j < 10; j++)
-                {
-                    tmp = $"{tmp},{i}{j}";
-                }
-                sbOutput.AppendLine(tmp);
-            }
-            // Create and write the csv file
-            System.IO.File.WriteAllText(strFilePath, sbOutput.ToString());
-            // To append more lines to the csv file
-            System.IO.File.AppendAllText(strFilePath, sbOutput.ToString());
-        }
-
         public void read_csv(string fileName)
         {
             // 待驗證
@@ -341,8 +318,6 @@ namespace cs_posSystem
 
         private void 開啟檔案ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string fileName = readFileDialog();
-            Classes.File file = new Classes.File();
             string fileName = file.readFileName("all");
             DataGridViewRowCollection rows = dataTable.Rows;
 
@@ -364,35 +339,61 @@ namespace cs_posSystem
             }
         }
 
-        private void getPlotData(List<string> names, List<double> double_datas, int group = 3)
+        private void getPlotData(List<string> datas, List<double> double_datas, int group = 3)
         {
             DataGridViewRowCollection rows = dataTable.Rows;
             Dictionary<string, int> map = new Dictionary<string, int>();
             int next = 0;
+            string month = DateTime.Now.ToString().Substring(0, 7).Replace("/", "-");
 
             for (int i = 0; i < rows.Count - 1; i++)
             {
-                string name = rows[i].Cells[group].Value.ToString();
+                string date = rows[i].Cells[1].Value.ToString();
+                string data = rows[i].Cells[group].Value.ToString();
                 double total = Convert.ToDouble(rows[i].Cells[6].Value.ToString());
 
-                if (group == 1)
+                /*if (group == 1)
                 {
                     // get yyyy-MM-dd
-                    name = name.Substring(0, 9);
+                    data = data.Substring(0, 10);
                 }
 
                 if (rows[i].Cells[2].Value.ToString() == "出貨")
                 {
-                    if (!names.Contains(name))
+                    if (!datas.Contains(data))
                     {
-                        map.Add(name, next);
-                        names.Add(name);
+                        map.Add(data, next);
+                        datas.Add(data);
                         double_datas.Add(total);
                         next++;
                     }
                     else
                     {
-                        double_datas[map[name]] += total;
+                        double_datas[map[data]] += total;
+                    }
+                }*/
+
+                if (date.Substring(0, 7) == month)
+                {
+                    if (group == 1)
+                    {
+                        // get yyyy-MM-dd
+                        data = data.Substring(0, 10);
+                    }
+
+                    if (rows[i].Cells[2].Value.ToString() == "出貨")
+                    {
+                        if (!datas.Contains(data))
+                        {
+                            map.Add(data, next);
+                            datas.Add(data);
+                            double_datas.Add(total);
+                            next++;
+                        }
+                        else
+                        {
+                            double_datas[map[data]] += total;
+                        }
                     }
                 }
             }
@@ -441,18 +442,16 @@ namespace cs_posSystem
             double[] arr_totals = totals.ToArray();
             string[] arr_names = dates.ToArray();
             double[] arr_dates = new double[arr_names.Length];
-            int i = 0;
 
-            foreach (string date in arr_names)
+            for (int i = 0; i < arr_names.Length; i++)
             {
-                date.Replace("-", "/");
-                arr_dates[i] = Convert.ToDateTime(date).ToOADate();
+                arr_dates[i] = Convert.ToDateTime(arr_names[i]).ToOADate();
             }
-            //Console.WriteLine($"arr_totals = {String.Join(", ", arr_totals)}");
-            //Console.WriteLine($"arr_names = {String.Join(", ", arr_names)}");
 
             plot.run(formsPlot1.Plot, arr_totals, arr_dates);
+            
             formsPlot1.Refresh();
+            Crosshair = formsPlot1.Plot.AddCrosshair(0, 0);
         }
 
         // 滑鼠移動進入圖表時，顯示座標
@@ -485,7 +484,6 @@ namespace cs_posSystem
         {
             // Set the output dir and file name
             // string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            Classes.File file = new Classes.File();
             string fileName = file.saveFileName("pdf");
 
             if (fileName == null) return;
@@ -503,12 +501,16 @@ namespace cs_posSystem
             PDF_Document document = new PDF_Document(pdf, PageSize.A4.Rotate());
             document.SetMargins(20, 20, 20, 20);
             Classes.iText_pdf itext_pdf = new Classes.iText_pdf();
-            Classes.File file = new Classes.File();
             DialogResult result = MessageBox.Show("是否需要匯入公司圖片", "匯入圖片", MessageBoxButtons.YesNoCancel);
             string date = DateTime.Now.ToString("yyyy-MM-dd");
             DataGridViewRowCollection rows = dataTable.Rows;
             string[,] table = new string[rows.Count, rows[0].Cells.Count];
-            //string[] row = new string[rows[0].Cells.Count];
+            string[] plotList = {
+                Application.StartupPath + @"\pie.png",
+                Application.StartupPath + @"\bar.png",
+                Application.StartupPath + @"\run.png",
+            };
+            Boolean isAllPlot = false;
 
             for (int i = 0; i < rows.Count - 1; i++)
             {
@@ -527,9 +529,12 @@ namespace cs_posSystem
                 {
                     MessageBox.Show("請選擇圖片");
                     return;
+                } else if (imgName == "cancel")
+                {
+                    return;
                 } else
                 {
-                    itext_pdf.addContentImg(document, imgName, 930, 160, align: PDF_HorizontalAlignment.RIGHT);
+                    itext_pdf.addContentImg(document, imgName, align: PDF_HorizontalAlignment.RIGHT);
                     //itext_pdf.addFixedImg(pdf, imgName, 930, 160);
                 }
             }
@@ -537,16 +542,44 @@ namespace cs_posSystem
             // 2. 加文字
 
             // 2.1. add header
-            itext_pdf.addTitle1(document, $"{date} 存貨報表");
-            //itext_pdf.addTitle2(document, "測試標題2");
+            itext_pdf.addTitle1(document, $"{date} 出貨圖表");
             itext_pdf.addHr(document);
             itext_pdf.addParagraph(document, $"報表日期：{date}", align: TextAlignment.RIGHT);
             itext_pdf.addNote(pdf, text: "便利貼黏貼處");
+
+            try
+            {
+                foreach (string plot in plotList)
+                {
+                    if (!file.exists_file(plot))
+                    {
+                        isAllPlot = true;
+                        break;
+                    }
+                }
+
+                if (isAllPlot)
+                {
+                    btn_plotPie_Click(null, null);
+                    btn_plotBar_Click(null, null);
+                    btn_plotRun_Click(null, null);
+                }
+
+                foreach (string plot in plotList)
+                {
+                    itext_pdf.addContentImg(document, plot);
+                }
+            } catch (Exception e)
+            {
+                Console.WriteLine($"[Error] Form1.cs addPdf() at line 563 is failed, e = {e}");
+                file.delete_file(tempDst);
+            }
+
+            itext_pdf.addTitle1(document, $"{date} 出貨報表");
+            itext_pdf.addHr(document);
             itext_pdf.addTable(document, table);
 
             document.Close();
-            //pdf.Close();
-            //writer.Close();
             // 4. edit existed pdf
             PdfReader reader2 = new PdfReader(tempDst);
             PdfWriter writer2 = new PdfWriter(dst);
@@ -565,9 +598,6 @@ namespace cs_posSystem
         private void btn_testPdf_Click(object sender, EventArgs e)
         {
             PrintPDF();
-            //form_plot plot = new form_plot();
-            //plot.plot_pie(amounts, names);
-            //plot.ShowDialog();
         }
     }
 }
