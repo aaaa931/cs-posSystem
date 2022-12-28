@@ -32,7 +32,6 @@ namespace cs_posSystem
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_input = new System.Windows.Forms.Button();
-            this.btn_output = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,10 +49,9 @@ namespace cs_posSystem
             this.開啟檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btn_write_csv = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_write_xlsx = new System.Windows.Forms.Button();
             this.dataTable = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,23 +61,27 @@ namespace cs_posSystem
             this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.formsPlot1 = new ScottPlot.FormsPlot();
             this.btn_plotRun = new System.Windows.Forms.Button();
             this.btn_plotBar = new System.Windows.Forms.Button();
-            this.formsPlot1 = new ScottPlot.FormsPlot();
             this.btn_plotPie = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.cbox_good2 = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
-            this.btn_testPdf = new System.Windows.Forms.Button();
-            this.btn_write_csv = new System.Windows.Forms.Button();
+            this.btn_write_pdf = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.richTextBox_static = new System.Windows.Forms.RichTextBox();
+            this.pictureBox_qrcode = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_qrcode)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_input
@@ -92,16 +94,6 @@ namespace cs_posSystem
             this.btn_input.Text = "輸入資料";
             this.btn_input.UseVisualStyleBackColor = true;
             this.btn_input.Click += new System.EventHandler(this.btn_input_Click);
-            // 
-            // btn_output
-            // 
-            this.btn_output.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_output.Location = new System.Drawing.Point(319, 519);
-            this.btn_output.Name = "btn_output";
-            this.btn_output.Size = new System.Drawing.Size(126, 37);
-            this.btn_output.TabIndex = 1;
-            this.btn_output.Text = "輸出資料";
-            this.btn_output.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -127,7 +119,7 @@ namespace cs_posSystem
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label3.Location = new System.Drawing.Point(50, 223);
+            this.label3.Location = new System.Drawing.Point(50, 212);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 27);
             this.label3.TabIndex = 4;
@@ -137,7 +129,7 @@ namespace cs_posSystem
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label4.Location = new System.Drawing.Point(50, 290);
+            this.label4.Location = new System.Drawing.Point(50, 279);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 27);
             this.label4.TabIndex = 5;
@@ -156,7 +148,7 @@ namespace cs_posSystem
             // tbox_price
             // 
             this.tbox_price.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_price.Location = new System.Drawing.Point(123, 222);
+            this.tbox_price.Location = new System.Drawing.Point(123, 211);
             this.tbox_price.Name = "tbox_price";
             this.tbox_price.Size = new System.Drawing.Size(190, 33);
             this.tbox_price.TabIndex = 7;
@@ -164,7 +156,7 @@ namespace cs_posSystem
             // tbox_amount
             // 
             this.tbox_amount.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tbox_amount.Location = new System.Drawing.Point(123, 282);
+            this.tbox_amount.Location = new System.Drawing.Point(123, 271);
             this.tbox_amount.Name = "tbox_amount";
             this.tbox_amount.Size = new System.Drawing.Size(190, 35);
             this.tbox_amount.TabIndex = 8;
@@ -172,7 +164,7 @@ namespace cs_posSystem
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.richTextBox1.Location = new System.Drawing.Point(55, 353);
+            this.richTextBox1.Location = new System.Drawing.Point(55, 349);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(258, 145);
             this.richTextBox1.TabIndex = 9;
@@ -183,7 +175,7 @@ namespace cs_posSystem
             this.groupBox1.Controls.Add(this.rbtn_sale);
             this.groupBox1.Controls.Add(this.rbtn_purchase);
             this.groupBox1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.groupBox1.Location = new System.Drawing.Point(55, 149);
+            this.groupBox1.Location = new System.Drawing.Point(55, 138);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(258, 58);
             this.groupBox1.TabIndex = 10;
@@ -249,7 +241,7 @@ namespace cs_posSystem
             // 開啟檔案ToolStripMenuItem
             // 
             this.開啟檔案ToolStripMenuItem.Name = "開啟檔案ToolStripMenuItem";
-            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.開啟檔案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.開啟檔案ToolStripMenuItem.Text = "開啟檔案";
             this.開啟檔案ToolStripMenuItem.Click += new System.EventHandler(this.開啟檔案ToolStripMenuItem_Click);
             // 
@@ -267,11 +259,10 @@ namespace cs_posSystem
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btn_write_pdf);
             this.tabPage1.Controls.Add(this.btn_write_csv);
             this.tabPage1.Controls.Add(this.button4);
-            this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.btn_write_xlsx);
             this.tabPage1.Controls.Add(this.dataTable);
             this.tabPage1.Location = new System.Drawing.Point(4, 36);
             this.tabPage1.Name = "tabPage1";
@@ -281,10 +272,21 @@ namespace cs_posSystem
             this.tabPage1.Text = "資料列表";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btn_write_csv
+            // 
+            this.btn_write_csv.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_write_csv.Location = new System.Drawing.Point(132, 379);
+            this.btn_write_csv.Name = "btn_write_csv";
+            this.btn_write_csv.Size = new System.Drawing.Size(126, 46);
+            this.btn_write_csv.TabIndex = 19;
+            this.btn_write_csv.Text = "匯出 csv";
+            this.btn_write_csv.UseVisualStyleBackColor = true;
+            this.btn_write_csv.Click += new System.EventHandler(this.btn_write_csv_Click);
+            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button4.Location = new System.Drawing.Point(528, 379);
+            this.button4.Location = new System.Drawing.Point(396, 379);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(126, 46);
             this.button4.TabIndex = 18;
@@ -292,38 +294,16 @@ namespace cs_posSystem
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button3
+            // btn_write_xlsx
             // 
-            this.button3.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button3.Location = new System.Drawing.Point(396, 379);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(126, 46);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "匯出 word";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button2.Location = new System.Drawing.Point(264, 379);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 46);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "匯出 pdf";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button1.Location = new System.Drawing.Point(0, 379);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 46);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "匯出 xlsx";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_write_xlsx.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_write_xlsx.Location = new System.Drawing.Point(0, 379);
+            this.btn_write_xlsx.Name = "btn_write_xlsx";
+            this.btn_write_xlsx.Size = new System.Drawing.Size(126, 46);
+            this.btn_write_xlsx.TabIndex = 15;
+            this.btn_write_xlsx.Text = "匯出 xlsx";
+            this.btn_write_xlsx.UseVisualStyleBackColor = true;
+            this.btn_write_xlsx.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataTable
             // 
@@ -402,6 +382,17 @@ namespace cs_posSystem
             this.tabPage2.Text = "出貨圖表";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // formsPlot1
+            // 
+            this.formsPlot1.Location = new System.Drawing.Point(3, 3);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.formsPlot1.Name = "formsPlot1";
+            this.formsPlot1.Size = new System.Drawing.Size(738, 378);
+            this.formsPlot1.TabIndex = 18;
+            this.formsPlot1.MouseEnter += new System.EventHandler(this.formsPlot1_MouseEnter);
+            this.formsPlot1.MouseLeave += new System.EventHandler(this.formsPlot1_MouseLeave);
+            this.formsPlot1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formsPlot1_MouseMove);
+            // 
             // btn_plotRun
             // 
             this.btn_plotRun.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -424,17 +415,6 @@ namespace cs_posSystem
             this.btn_plotBar.UseVisualStyleBackColor = true;
             this.btn_plotBar.Click += new System.EventHandler(this.btn_plotBar_Click);
             // 
-            // formsPlot1
-            // 
-            this.formsPlot1.Location = new System.Drawing.Point(3, 3);
-            this.formsPlot1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
-            this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(738, 378);
-            this.formsPlot1.TabIndex = 18;
-            this.formsPlot1.MouseEnter += new System.EventHandler(this.formsPlot1_MouseEnter);
-            this.formsPlot1.MouseLeave += new System.EventHandler(this.formsPlot1_MouseLeave);
-            this.formsPlot1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formsPlot1_MouseMove);
-            // 
             // btn_plotPie
             // 
             this.btn_plotPie.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -448,28 +428,17 @@ namespace cs_posSystem
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.pictureBox_qrcode);
+            this.tabPage3.Controls.Add(this.richTextBox_static);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Location = new System.Drawing.Point(4, 36);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(744, 369);
+            this.tabPage3.Size = new System.Drawing.Size(744, 431);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "統計";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // cbox_good2
-            // 
-            this.cbox_good2.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.cbox_good2.FormattingEnabled = true;
-            this.cbox_good2.Items.AddRange(new object[] {
-            "繃帶",
-            "酒精",
-            "口罩",
-            "濕度計",
-            "濕紙巾"});
-            this.cbox_good2.Location = new System.Drawing.Point(123, 119);
-            this.cbox_good2.Name = "cbox_good2";
-            this.cbox_good2.Size = new System.Drawing.Size(190, 35);
-            this.cbox_good2.TabIndex = 14;
             // 
             // pictureBox1
             // 
@@ -492,37 +461,60 @@ namespace cs_posSystem
             this.btn_update.UseVisualStyleBackColor = true;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
-            // btn_testPdf
+            // btn_write_pdf
             // 
-            this.btn_testPdf.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_testPdf.Location = new System.Drawing.Point(451, 519);
-            this.btn_testPdf.Name = "btn_testPdf";
-            this.btn_testPdf.Size = new System.Drawing.Size(126, 37);
-            this.btn_testPdf.TabIndex = 17;
-            this.btn_testPdf.Text = "測試 PDF";
-            this.btn_testPdf.UseVisualStyleBackColor = true;
-            this.btn_testPdf.Click += new System.EventHandler(this.btn_testPdf_Click);
+            this.btn_write_pdf.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_write_pdf.Location = new System.Drawing.Point(264, 379);
+            this.btn_write_pdf.Name = "btn_write_pdf";
+            this.btn_write_pdf.Size = new System.Drawing.Size(126, 46);
+            this.btn_write_pdf.TabIndex = 17;
+            this.btn_write_pdf.Text = "匯出 PDF";
+            this.btn_write_pdf.UseVisualStyleBackColor = true;
+            this.btn_write_pdf.Click += new System.EventHandler(this.btn_testPdf_Click);
             // 
-            // btn_write_csv
+            // label6
             // 
-            this.btn_write_csv.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_write_csv.Location = new System.Drawing.Point(132, 379);
-            this.btn_write_csv.Name = "btn_write_csv";
-            this.btn_write_csv.Size = new System.Drawing.Size(126, 46);
-            this.btn_write_csv.TabIndex = 19;
-            this.btn_write_csv.Text = "匯出 csv";
-            this.btn_write_csv.UseVisualStyleBackColor = true;
-            this.btn_write_csv.Click += new System.EventHandler(this.btn_write_csv_Click);
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label6.Location = new System.Drawing.Point(119, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 27);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "出貨統計資料";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微軟正黑體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label7.Location = new System.Drawing.Point(458, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(188, 27);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "出貨統計 QR Code";
+            // 
+            // richTextBox_static
+            // 
+            this.richTextBox_static.Location = new System.Drawing.Point(37, 53);
+            this.richTextBox_static.Name = "richTextBox_static";
+            this.richTextBox_static.Size = new System.Drawing.Size(306, 355);
+            this.richTextBox_static.TabIndex = 19;
+            this.richTextBox_static.Text = "";
+            // 
+            // pictureBox_qrcode
+            // 
+            this.pictureBox_qrcode.Location = new System.Drawing.Point(410, 53);
+            this.pictureBox_qrcode.Name = "pictureBox_qrcode";
+            this.pictureBox_qrcode.Size = new System.Drawing.Size(300, 300);
+            this.pictureBox_qrcode.TabIndex = 20;
+            this.pictureBox_qrcode.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 587);
-            this.Controls.Add(this.btn_testPdf);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.cbox_good2);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.cbox_good);
             this.Controls.Add(this.groupBox1);
@@ -534,13 +526,13 @@ namespace cs_posSystem
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btn_output);
             this.Controls.Add(this.btn_input);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "北護藥局存儲系統";
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -549,7 +541,10 @@ namespace cs_posSystem
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_qrcode)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -558,7 +553,6 @@ namespace cs_posSystem
         #endregion
 
         private System.Windows.Forms.Button btn_input;
-        private System.Windows.Forms.Button btn_output;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -578,9 +572,7 @@ namespace cs_posSystem
         private System.Windows.Forms.DataGridView dataTable;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox cbox_good2;
+        private System.Windows.Forms.Button btn_write_xlsx;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
@@ -589,16 +581,19 @@ namespace cs_posSystem
         private System.Windows.Forms.DataGridViewTextBoxColumn amount;
         private System.Windows.Forms.DataGridViewTextBoxColumn total;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private Button button3;
         private Button button4;
         private Button btn_update;
         private ToolStripMenuItem 開啟檔案ToolStripMenuItem;
         private Button btn_plotPie;
         private ScottPlot.FormsPlot formsPlot1;
-        private Button btn_testPdf;
+        private Button btn_write_pdf;
         private Button btn_plotRun;
         private Button btn_plotBar;
         private Button btn_write_csv;
+        private PictureBox pictureBox_qrcode;
+        private RichTextBox richTextBox_static;
+        private Label label7;
+        private Label label6;
     }
 }
 

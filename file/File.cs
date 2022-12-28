@@ -173,19 +173,18 @@ namespace Classes
 
         public void read_csv(string fileName, DataGridViewRowCollection rows)
         {
-            //StreamReader sr = new StreamReader(fileName);
-            //List<string> result = new List<string>();
-
             using (StreamReader sr = new StreamReader(fileName))
             {
                 List<string> dataList = new List<string> ();
+                string Alldata = "";
+                string[] data;
 
                 try
                 {
                     while (!sr.EndOfStream)
                     {
                         //string row = sr.ReadLine().Replace(",", "");
-                        dataList.Add(sr.ReadLine().Replace(",", ""));
+                        dataList.Add(sr.ReadLine());
                     }
                 } catch (Exception e)
                 {
@@ -195,21 +194,12 @@ namespace Classes
                 rows.Clear();
 
                 // 等待修改
-                //for (int i = 0; i < range.Rows.Count; i++)
-                //{
-                //    // cell[1,] 是標題列，需要去掉
-                //    Object[] row = new Object[range.Columns.Count];
+                for (int i = 1; i < dataList.Count; i++)
+                {
+                    string[] row = dataList[i].Split(',');
 
-                //    for (int j = 0; j < range.Columns.Count; j++)
-                //    {
-                //        row[j] = Sheet.Cells[i + 2, j + 1].Value;
-                //    }
-
-                //    rows.Add(row);
-                //}
-
-                //string[] data = dataList.
-                //return dataList.ToArray()
+                    rows.Add(row);
+                }
             }
         }
 
@@ -223,7 +213,7 @@ namespace Classes
 
             foreach (string title in titles)
             {
-                line += $",{title}";
+                line += $"{title},";
             }
 
             dataList.Add(line);
@@ -235,7 +225,7 @@ namespace Classes
 
                 for (int j = 0; j < 7; j++)
                 {
-                    line += $",{rows[i - 1].Cells[j].Value}";
+                    line += $"{rows[i - 1].Cells[j].Value},";
                 }
 
                 dataList.Add(line);
@@ -319,6 +309,45 @@ namespace Classes
             }
 
             return 0;
+        }
+
+        public System.Drawing.Bitmap createQrcode(string data, int width = 300, int height = 300)
+        {
+            //Use bitmap to storage qr-code
+            System.Drawing.Bitmap bitmap = null;
+            //let string to qr-code
+
+            // QR Code產生器
+            ZXing.BarcodeWriter writer = new ZXing.BarcodeWriter
+            {
+                Format = ZXing.BarcodeFormat.QR_CODE,
+                Options = new ZXing.QrCode.QrCodeEncodingOptions
+                {
+                    //Create Photo
+                    Height = height,
+                    Width = width,
+                    CharacterSet = "UTF-8",
+
+                    //錯誤修正容量
+                    //L水平    7%的字碼可被修正
+                    //M水平    15%的字碼可被修正
+                    //Q水平    25%的字碼可被修正
+                    //H水平    30%的字碼可被修正
+                    ErrorCorrection = ZXing.QrCode.Internal.ErrorCorrectionLevel.H
+                }
+
+            };
+            //Create Qr-code , use input string
+            bitmap = writer.Write(data);
+            //Storage bitmpa
+
+            string strDir;
+            strDir = Directory.GetCurrentDirectory();
+            strDir += "\\temp.jpg";
+            bitmap.Save(strDir, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //Display to picturebox
+            //pictureBox1.Image = bitmap;
+            return bitmap;
         }
     }
 }

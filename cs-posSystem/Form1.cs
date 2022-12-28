@@ -37,12 +37,16 @@ using PDF_Paragraph = iText.Layout.Element.Paragraph;
 using PDF_Table = iText.Layout.Element.Table;
 using PDF_HorizontalAlignment = iText.Layout.Properties.HorizontalAlignment;
 using static System.Net.Mime.MediaTypeNames;
+using MathNet.Numerics.Statistics;
 
 namespace cs_posSystem
 {
     public partial class Form1 : Form
     {
-
+        // ref: https://dotblogs.com.tw/DavidTalk/2018/06/03/182559
+        private float X;//當前窗體的寬度
+        private float Y;//當前窗體的高度
+        bool isLoaded;  // 是否已設定各控制的尺寸資料到Tag屬性
         // ScottPlot start
         private Crosshair Crosshair;
         // ScottPlot end
@@ -50,6 +54,10 @@ namespace cs_posSystem
         public Form1()
         {
             InitializeComponent();
+            isLoaded = false;
+            Form1_Load(null, null);
+            Form1_Shown(null, null);
+            //Form1_Resize();
 
             var plt = formsPlot1.Plot;
 
@@ -59,7 +67,7 @@ namespace cs_posSystem
             from_login.ShowDialog();
 
             Load_DB();
-            Show_DB();
+            //Show_DB();
             this.label5.Text = index.ToString();
 
             //ScottPlot start
@@ -72,6 +80,64 @@ namespace cs_posSystem
             // Set axis limits to control the view
             // (min x, max x, min y, max y)
             plt.SetAxisLimits(0, 100, -25, 25);
+
+            initView();
+        }
+
+        private void SetTag(Control cons)
+        {
+            foreach (Control con in cons.Controls)
+            {
+                con.Tag = con.Width + ":" + con.Height + ":" + con.Left + ":" + con.Top + ":" + con.Font.Size;
+                if (con.Controls.Count > 0)
+                    SetTag(con);
+            }
+        }
+
+        private void SetControls(float newx, float newy, Control cons)
+        {
+            if (isLoaded)
+            {
+                //遍歷窗體中的控制項，重新設置控制項的值
+                foreach (Control con in cons.Controls)
+                {
+                    string[] mytag = con.Tag.ToString().Split(new char[] { ':' });//獲取控制項的Tag屬性值，並分割後存儲字元串數組
+                    float a = System.Convert.ToSingle(mytag[0]) * newx;//根據窗體縮放比例確定控制項的值，寬度
+                    con.Width = (int)a;//寬度
+                    a = System.Convert.ToSingle(mytag[1]) * newy;//高度
+                    con.Height = (int)(a);
+                    a = System.Convert.ToSingle(mytag[2]) * newx;//左邊距離
+                    con.Left = (int)(a);
+                    a = System.Convert.ToSingle(mytag[3]) * newy;//上邊緣距離
+                    con.Top = (int)(a);
+                    Single currentSize = System.Convert.ToSingle(mytag[4]) * newy;//字體大小
+                    con.Font = new System.Drawing.Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
+                    if (con.Controls.Count > 0)
+                    {
+                        SetControls(newx, newy, con);
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            X = this.Width;//獲取窗體的寬度
+            Y = this.Height;//獲取窗體的高度
+            isLoaded = true;// 已設定各控制項的尺寸到Tag屬性中
+            SetTag(this);//調用方法
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            float newx = (this.Width) / X;
+            float newy = (this.Height) / Y;
+            SetControls(newx, newy, this);
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
         }
 
         int index = 1;
@@ -79,6 +145,7 @@ namespace cs_posSystem
         {
             //log.db要放在【bin\Debug底下】      
             public static string dbFile = Application.StartupPath + @"\log.db";
+            //public static string dbFile = @"C:\Users\User\Desktop\repo\cs-posSystem\bin\Debug\log.db";
             public static string dbPath = "Data source=" + dbFile;
             public static SQLiteConnection sqlite_connect;
             public static SQLiteCommand sqlite_cmd;
@@ -178,7 +245,7 @@ namespace cs_posSystem
             DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
             DBConfig.sqlite_cmd.ExecuteNonQuery();
 
-            Show_DB();
+            initView();
 
             /*if (_type == 0)
             {
@@ -204,7 +271,6 @@ namespace cs_posSystem
         private void button1_Click(object sender, EventArgs e)
         {
             string fileName = file.saveFileName("xlsx");
-            MessageBox.Show(fileName);
             DataGridViewRowCollection rows = dataTable.Rows;
             file.write_xlsx(fileName, rows);
         }
@@ -303,7 +369,7 @@ namespace cs_posSystem
 
             DBConfig.sqlite_cmd = new SQLiteCommand(sql, DBConfig.sqlite_connect);
             DBConfig.sqlite_cmd.ExecuteNonQuery();
-            Show_DB();
+            initView();
         }
 
         public void read_csv(string fileName)
@@ -329,7 +395,7 @@ namespace cs_posSystem
                 file.read_xlsx(fileName, rows);
             } else if (fileName.Contains(".csv"))
             {
-                // read_csv(fileName);
+                file.read_csv(fileName, rows);
             } else if (fileName.Contains(".word"))
             {
                 // read_word(fileName);
@@ -598,6 +664,45 @@ namespace cs_posSystem
         private void btn_testPdf_Click(object sender, EventArgs e)
         {
             PrintPDF();
+        }
+
+        private void showStatic()
+        {
+            // https://numerics.mathdotnet.com
+            List<string> names = new List<string>();
+            List<double> totals = new List<double>();
+            getPlotData(names, totals);
+
+            double mean = Statistics.Mean(totals);
+            double stddiv = Statistics.StandardDeviation(totals);
+            double pstddiv = Statistics.PopulationStandardDeviation(totals);
+            double variance = Statistics.Variance(totals);
+            double median = Statistics.Median(totals);
+            double lowerQuartile = Statistics.LowerQuartile(totals);
+            double upperQuartile = Statistics.UpperQuartile(totals);
+            double interQuartileRange = Statistics.InterquartileRange(totals);
+            double min = Statistics.Minimum(totals);
+            double max = Statistics.Maximum(totals);
+
+            string _log = $"平均值: {mean}\n" +
+                $"樣本標準差: {stddiv}\n" +
+                $"樣本標準差: {pstddiv}\n" +
+                $"變異數: {variance}\n" +
+                $"中位數: {median}\n" +
+                $"四分位數（25 %）: {lowerQuartile}\n" +
+                $"四分位數（75 %）: {interQuartileRange}\n" +
+                $"最小值: {min}\n" +
+                $"最大值: {max}";
+            richTextBox_static.Text = _log;
+        }
+
+        private void initView()
+        {
+            Show_DB();
+            showStatic();
+
+            Bitmap qrCode = file.createQrcode(richTextBox_static.Text.ToString());
+            pictureBox_qrcode.Image = qrCode;
         }
     }
 }
