@@ -66,21 +66,25 @@ namespace cs_posSystem
             from_login = new Form2();
             from_login.ShowDialog();
 
+            //MessageBox.Show($"Before Load_DB");
             Load_DB();
             //Show_DB();
             this.label5.Text = index.ToString();
 
+            //MessageBox.Show($"Before Crosshair");
             //ScottPlot start
             Crosshair = formsPlot1.Plot.AddCrosshair(0, 0);
             formsPlot1.Refresh();
             //ScottPlot end
 
+            //MessageBox.Show($"Before formsPlot1_MouseLeave");
             formsPlot1_MouseLeave(null, null);
 
             // Set axis limits to control the view
             // (min x, max x, min y, max y)
             plt.SetAxisLimits(0, 100, -25, 25);
 
+            //MessageBox.Show($"Before initView");
             initView();
         }
 
@@ -153,8 +157,14 @@ namespace cs_posSystem
         }
         private void Load_DB()
         {
-            DBConfig.sqlite_connect = new SQLiteConnection(DBConfig.dbPath);
-            DBConfig.sqlite_connect.Open();// Open
+            try
+            {
+                DBConfig.sqlite_connect = new SQLiteConnection(DBConfig.dbPath);
+                DBConfig.sqlite_connect.Open();// Open
+            } catch (Exception e)
+            {
+                MessageBox.Show($"[Error] Load_DB is failed at line 167, e = {e}");
+            }
         }
         private void Show_DB()
         {
